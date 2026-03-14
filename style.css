@@ -1,0 +1,159 @@
+body{
+font-family: "Segoe UI", sans-serif;
+margin:0;
+background:#f6f8fb;
+color:#222;
+line-height:1.6;
+}
+
+.hero{
+background:linear-gradient(135deg,#0a6cff,#2ec4b6);
+color:white;
+padding:100px 20px;
+text-align:center;
+}
+
+.hero h1{
+font-size:56px;
+margin-bottom:10px;
+}
+
+.subtitle{
+font-size:20px;
+margin-bottom:30px;
+}
+
+.search-box{
+display:flex;
+justify-content:center;
+flex-wrap:wrap;
+gap:10px;
+}
+
+.search-box input{
+padding:14px;
+width:300px;
+border-radius:30px;
+border:none;
+font-size:16px;
+}
+
+.search-box button{
+padding:14px 30px;
+border:none;
+border-radius:30px;
+background:#00bcd4;
+color:white;
+font-weight:600;
+cursor:pointer;
+transition:0.3s;
+}
+
+.search-box button:hover{
+background:#0097a7;
+}
+
+main{
+max-width:1100px;
+margin:auto;
+padding:60px 20px;
+}
+
+section{
+margin-bottom:80px;
+}
+
+h2{
+text-align:center;
+font-size:32px;
+margin-bottom:40px;
+}
+
+.steps{
+display:flex;
+gap:30px;
+flex-wrap:wrap;
+justify-content:center;
+}
+
+.step{
+background:white;
+padding:30px;
+border-radius:12px;
+width:250px;
+text-align:center;
+box-shadow:0 4px 10px rgba(0,0,0,0.05);
+}
+
+.step i{
+font-size:40px;
+color:#0a6cff;
+margin-bottom:15px;
+}
+
+.input-box{
+display:flex;
+justify-content:center;
+gap:10px;
+}
+
+.input-box input{
+padding:14px;
+width:300px;
+border-radius:30px;
+border:1px solid #ccc;
+}
+
+.input-box button{
+padding:14px 25px;
+border-radius:30px;
+border:none;
+background:#0a6cff;
+color:white;
+cursor:pointer;
+}
+
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+}
+
+.card{
+background:white;
+padding:25px;
+border-radius:12px;
+box-shadow:0 4px 10px rgba(0,0,0,0.05);
+}
+
+.advice-box{
+background:white;
+padding:30px;
+border-radius:12px;
+box-shadow:0 4px 10px rgba(0,0,0,0.05);
+text-align:center;
+}
+
+.disclaimer{
+background:#eef5ff;
+padding:30px;
+text-align:center;
+border-radius:10px;
+}
+
+.author-card{
+background:white;
+padding:30px;
+border-radius:12px;
+max-width:600px;
+margin:auto;
+box-shadow:0 4px 10px rgba(0,0,0,0.05);
+text-align:center;
+}
+
+footer{
+background:#0a6cff;
+color:white;
+text-align:center;
+padding:20px;
+}
