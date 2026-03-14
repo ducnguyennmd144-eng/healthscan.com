@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>HealthScan AI – Hệ thống chẩn đoán sức khỏe học sinh</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<header class="hero">
+
+<div class="hero-content">
+
+<h1>HealthScan AI</h1>
+
+<p class="subtitle">
+Phân tích triệu chứng và nhận hướng dẫn sức khỏe cơ bản dành cho học sinh.
+</p>
+
+<div class="search-box">
+
+<input id="symptomInput"
+type="text"
+placeholder="Nhập triệu chứng: sốt, ho, đau đầu...">
+
+<button onclick="checkSymptoms()">Phân tích</button>
+
+</div>
+
+</div>
+
+</header>
+
+
+<main>
+
+
+<section class="how-it-works">
+
+<h2>Cách hệ thống hoạt động</h2>
+
+<div class="steps">
+
+<div class="step">
+<i class="fa-solid fa-keyboard"></i>
+<h3>Nhập triệu chứng</h3>
+<p>Nhập các triệu chứng bạn đang gặp phải.</p>
+</div>
+
+<div class="step">
+<i class="fa-solid fa-brain"></i>
+<h3>Hệ thống phân tích</h3>
+<p>AI phân tích các bệnh có khả năng xảy ra.</p>
+</div>
+
+<div class="step">
+<i class="fa-solid fa-heart-pulse"></i>
+<h3>Nhận lời khuyên</h3>
+<p>Hệ thống đưa ra mức độ rủi ro và lời khuyên.</p>
+</div>
+
+</div>
+
+</section>
+
+
+<section class="symptom-checker">
+
+<h2>Kiểm tra triệu chứng</h2>
+
+<div class="input-box">
+
+<input id="symptomInput2"
+type="text"
+placeholder="Ví dụ: sốt, ho, đau họng...">
+
+<button onclick="checkSymptoms()">Kiểm tra</button>
+
+</div>
+
+</section>
+
+
+<section class="results-section">
+
+<h2>Bệnh có thể gặp và mức độ rủi ro</h2>
+
+<div id="results" class="cards"></div>
+
+</section>
+
+
+<section class="advice-section">
+
+<h2>Lời khuyên sức khỏe</h2>
+
+<div id="adviceBox" class="advice-box">
+
+Hệ thống sẽ đưa ra lời khuyên tại đây.
+
+</div>
+
+</section>
+
+
+<section class="education">
+
+<h2>Kiến thức sức khỏe cho học sinh</h2>
+
+<div class="cards">
+
+<div class="card">
+<h3>Cảm cúm</h3>
+<p>Bệnh phổ biến với triệu chứng sốt, ho, mệt mỏi.</p>
+</div>
+
+<div class="card">
+<h3>Đau đầu</h3>
+<p>Có thể do stress, thiếu ngủ hoặc sử dụng máy tính quá nhiều.</p>
+</div>
+
+<div class="card">
+<h3>Đau bụng</h3>
+<p>Có thể do rối loạn tiêu hóa hoặc ăn uống không hợp vệ sinh.</p>
+</div>
+
+</div>
+
+</section>
+
+
+<section class="disclaimer">
+
+<p>
+⚠️ Hệ thống này chỉ mang tính chất tham khảo và không thay thế tư vấn y tế chuyên nghiệp.
+</p>
+
+</section>
+
+
+<section class="author">
+
+<h2>Về tác giả</h2>
+
+<div class="author-card">
+
+<h3>Nguyễn Minh Đức</h3>
+
+<p>Lớp: 25-28 Tin (Chương trình chuyên Tin)</p>
+
+<p>Trường: THPT Chuyên Lương Thế Vinh</p>
+
+<p>
+Dự án này được phát triển như một dự án sáng tạo học sinh nhằm
+nghiên cứu ứng dụng trí tuệ nhân tạo và phân tích dữ liệu
+trong chẩn đoán sức khỏe cơ bản cho học sinh.
+</p>
+
+</div>
+
+</section>
+
+</main>
+
+
+<footer>
+
+<p>© 2026 HealthScan AI</p>
+
+</footer>
+
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
