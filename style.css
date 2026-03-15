@@ -1,232 +1,266 @@
-/* Thiết lập chung & Biến màu sắc để dễ quản lý */
+/* 1. ĐỊNH NGHĨA BIẾN MÀU SẮC & CẤU HÌNH CHUNG */
 :root {
-    --primary-color: #0a6cff;
-    --secondary-color: #2ec4b6;
-    --accent-color: #ff9f1c;
-    --danger-color: #e74c3c;
-    --warning-color: #f39c12;
-    --success-color: #27ae60;
-    --bg-light: #f8fafd;
-    --text-dark: #2c3e50;
-    --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-    --transition: all 0.3s ease;
+    --primary-color: #4a90e2;    /* Xanh dương công nghệ */
+    --secondary-color: #2ecc71;  /* Xanh lá sức khỏe */
+    --bg-light: #f0f4f8;
+    --text-main: #2c3e50;
+    --white: #ffffff;
+    --shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    --user-msg: #4a90e2;
+    --ai-msg: #f1f3f5;
+}
+
+* {
+    box-sizing: border-box;
+    transition: all 0.3s ease; /* Tạo hiệu ứng mượt cho mọi thay đổi */
 }
 
 body {
-    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     margin: 0;
-    background: var(--bg-light);
-    color: var(--text-dark);
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-light);
+    color: var(--text-main);
     line-height: 1.6;
-    scroll-behavior: smooth;
 }
 
-/* Hero Section - Làm hiệu ứng Gradient động */
-.hero {
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    color: white;
-    padding: 120px 20px;
-    text-align: center;
-    clip-path: ellipse(150% 100% at 50% 0%); /* Tạo đường cong nhẹ ở dưới */
-}
-
-.hero h1 {
-    font-size: clamp(2.5rem, 5vw, 4rem); /* Co giãn font theo màn hình */
-    margin-bottom: 15px;
-    font-weight: 800;
-    letter-spacing: -1px;
-}
-
-.subtitle {
-    font-size: 1.2rem;
-    margin-bottom: 40px;
-    opacity: 0.9;
-    max-width: 700px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-/* Search Box - Hiệu ứng Glow khi focus */
-.search-box {
+/* 2. NAVBAR HIỆN ĐẠI */
+.navbar {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    gap: 15px;
-    max-width: 600px;
-    margin: 0 auto;
+    padding: 1rem 10%;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px); /* Hiệu ứng kính mờ */
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.05);
 }
 
-.search-box input {
-    flex: 1;
-    padding: 18px 25px;
-    border-radius: 50px;
-    border: 2px solid transparent;
-    font-size: 16px;
-    outline: none;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    transition: var(--transition);
+.logo {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-.search-box input:focus {
-    border-color: var(--accent-color);
-    box-shadow: 0 4px 20px rgba(255, 159, 28, 0.3);
+.nav-links a {
+    text-decoration: none;
+    color: #666;
+    font-weight: 600;
+    margin-left: 25px;
+    padding: 8px 16px;
+    border-radius: 20px;
 }
 
-.search-box button {
-    padding: 18px 35px;
-    border: none;
-    border-radius: 50px;
-    background: var(--text-dark);
-    color: white;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.search-box button:hover {
-    background: var(--accent-color);
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
-
-/* Main Layout */
-main {
-    max-width: 1200px;
-    margin: auto;
-    padding: 80px 20px;
-}
-
-section {
-    margin-bottom: 100px;
-}
-
-h2 {
-    text-align: center;
-    font-size: 2.2rem;
-    margin-bottom: 50px;
-    position: relative;
-    font-weight: 700;
-}
-
-h2::after {
-    content: '';
-    display: block;
-    width: 60px;
-    height: 4px;
+.nav-links a.active, .nav-links a:hover {
     background: var(--primary-color);
-    margin: 15px auto;
-    border-radius: 2px;
+    color: white;
 }
 
-/* Steps - Thêm Hover hiệu ứng */
-.steps {
+/* 3. LAYOUT CHÍNH */
+.container {
+    max-width: 1100px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+.project-info {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 30px;
+    background: var(--white);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+}
+
+.project-info h1 { margin: 0; color: var(--primary-color); font-size: 2.5rem; }
+.project-desc { color: #7f8c8d; max-width: 700px; margin: 15px auto; }
+
+/* 4. CHATBOT GRID */
+.main-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: 1.8fr 1fr;
     gap: 30px;
 }
 
-.step {
-    background: white;
-    padding: 40px 30px;
-    border-radius: 20px;
-    text-align: center;
-    box-shadow: var(--shadow);
-    transition: var(--transition);
-}
-
-.step:hover {
-    transform: translateY(-10px);
-}
-
-.step i {
-    font-size: 50px;
-    background: linear-gradient(var(--primary-color), var(--secondary-color));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-bottom: 20px;
-}
-
-/* Results Section - Thêm Border-Left màu sắc */
-.cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 25px;
-}
-
-.card {
-    background: white;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: var(--shadow);
-    border-top: 5px solid var(--primary-color);
-    transition: var(--transition);
-}
-
-.card:hover {
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
-}
-
-.card h3 {
-    margin-top: 0;
-    color: var(--primary-color);
-    font-size: 1.5rem;
-}
-
-/* Advice Box */
-.advice-box {
-    background: white;
-    padding: 40px;
-    border-radius: 20px;
-    box-shadow: var(--shadow);
-    border-left: 8px solid var(--secondary-color);
-    font-size: 1.1rem;
-    color: #555;
-}
-
-/* Disclaimer - Làm nổi bật cảnh báo */
-.disclaimer {
-    background: #fff5f5;
-    padding: 25px;
-    border-left: 5px solid var(--danger-color);
-    border-radius: 10px;
-    margin: 40px 0;
-    font-style: italic;
-}
-
-/* Author Section - Layout gọn gàng */
-.author-card {
-    background: white;
-    padding: 50px;
-    border-radius: 20px;
-    max-width: 800px;
-    margin: auto;
-    box-shadow: var(--shadow);
+/* 5. KHUNG CHAT & HIỆU ỨNG BONG BÓNG */
+.chat-container {
+    background: var(--white);
+    height: 550px;
+    border-radius: 25px;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+.chat-box {
+    flex: 1;
+    padding: 25px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background-image: radial-gradient(#dcf0fa 0.5px, transparent 0.5px); /* Chấm bi nhẹ nền chat */
+    background-size: 20px 20px;
+}
+
+/* Hiệu ứng xuất hiện tin nhắn */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px) scale(0.9); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.message-wrapper {
+    display: flex;
+    width: 100%;
+    animation: fadeInUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.message {
+    padding: 12px 18px;
+    border-radius: 20px;
+    font-size: 0.95rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+}
+
+.user-wrapper { justify-content: flex-end; }
+.user-message {
+    background: var(--user-msg);
+    color: white;
+    border-bottom-right-radius: 4px; /* Tạo hình mỏ neo bong bóng */
+}
+
+.ai-wrapper { justify-content: flex-start; }
+.ai-message {
+    background: var(--ai-msg);
+    color: #333;
+    border-bottom-left-radius: 4px;
+}
+
+/* Disease Card bên trong AI Message */
+.disease-card {
+    background: white;
+    border-radius: 12px;
+    padding: 15px;
+    margin-top: 10px;
+    border-left: 5px solid var(--primary-color);
+}
+
+/* 6. Ô NHẬP LIỆU */
+.input-area {
+    padding: 20px;
+    background: #fff;
+    display: flex;
+    gap: 12px;
+    border-top: 1px solid #eee;
+}
+
+#symptomInput {
+    flex: 1;
+    padding: 15px 25px;
+    border: 2px solid #edf2f7;
+    border-radius: 30px;
+    outline: none;
+    font-size: 1rem;
+}
+
+#symptomInput:focus { border-color: var(--primary-color); }
+
+#sendBtn {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+#sendBtn:hover { transform: rotate(-15deg) scale(1.1); background: #357abd; }
+
+/* 7. BẢNG GỢI Ý */
+.suggestion-panel {
+    background: var(--white);
+    padding: 25px;
+    border-radius: 25px;
+    box-shadow: var(--shadow);
+    height: fit-content;
+}
+
+.suggest-tags {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.suggest-tags button {
+    padding: 12px;
+    border: 1px solid #edf2f7;
+    background: #f8fafc;
+    border-radius: 15px;
+    cursor: pointer;
+    font-weight: 600;
+    text-align: left;
+}
+
+.suggest-tags button:hover {
+    background: var(--primary-color);
+    color: white;
+    transform: translateX(5px);
+}
+
+/* 8. TRANG TIPS (TIPS GRID) */
+.tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    margin-top: 40px;
+}
+
+.tip-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
     text-align: center;
+    padding: 30px;
 }
 
-.author-card h3 {
-    font-size: 1.8rem;
-    margin-bottom: 5px;
+.tip-card:hover { transform: translateY(-10px); }
+
+.tip-image {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    display: block;
 }
 
-/* Footer */
-footer {
-    background: #1a1a1a;
-    color: rgba(255,255,255,0.7);
-    text-align: center;
-    padding: 40px 20px;
-    font-size: 0.9rem;
+.tip-content h3 { color: var(--primary-color); margin-top: 0; }
+
+/* 9. HIỆU ỨNG CHỜ AI ĐANG GÕ (TYPING) */
+.typing-indicator {
+    display: flex;
+    gap: 4px;
+    padding: 10px;
 }
 
-/* Responsive - Cho mobile mượt hơn */
-@media (max-width: 768px) {
-    .hero { padding: 80px 20px; }
-    .search-box { flex-direction: column; }
-    .search-box input { width: 100%; box-sizing: border-box; }
-    .search-box button { width: 100%; }
+.typing-indicator span {
+    width: 8px; height: 8px;
+    background: #bdc3c7;
+    border-radius: 50%;
+    animation: blink 1.4s infinite both;
+}
+
+.typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+.typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes blink {
+    0%, 80%, 100% { opacity: 0.2; }
+    40% { opacity: 1; }
 }
