@@ -1,107 +1,163 @@
 <!DOCTYPE html>
 <html lang="vi">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HealthScan – Hệ thống chẩn đoán sức khỏe học sinh</title>
+    <title>HealthScan - Trợ lý sức khỏe học đường</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
-
 <body>
-    <header class="hero">
-        <div class="hero-content">
-            <h1>HealthScan AI</h1>
-            <p class="subtitle">
-                Hệ thống phân tích triệu chứng và hướng dẫn sức khỏe dành riêng cho học sinh chuyên Tin.
-            </p>
-            
-            <div class="search-box">
-                <input id="symptomInput" type="text" placeholder="Nhập triệu chứng (ví dụ: đau vai gáy, mỏi mắt, sốt...)">
-                <button onclick="checkSymptoms()">Phân tích ngay</button>
-            </div>
+
+    <nav class="navbar">
+        <div class="logo">
+            <span class="logo-icon">⊕</span> <span>HealthScan</span>
         </div>
-    </header>
+        <div class="nav-links">
+            <a href="index.html" class="active">Trang chủ</a>
+            <a href="tips.html">Mẹo sức khỏe</a>
+        </div>
+    </nav>
 
-    <main>
-        <section class="how-it-works">
-            <h2>Quy trình phân tích</h2>
-            <div class="steps">
-                <div class="step">
-                    <i class="fa-solid fa-keyboard"></i>
-                    <h3>Nhập liệu</h3>
-                    <p>Gõ các dấu hiệu bạn đang cảm thấy.</p>
-                </div>
-                <div class="step">
-                    <i class="fa-solid fa-brain"></i>
-                    <h3>AI Matching</h3>
-                    <p>Hệ thống dò tìm trong cơ sở dữ liệu 100 bệnh lý.</p>
-                </div>
-                <div class="step">
-                    <i class="fa-solid fa-heart-pulse"></i>
-                    <h3>Kết quả</h3>
-                    <p>Nhận mức độ rủi ro và hướng xử lý nhanh.</p>
-                </div>
+    <main class="container">
+        
+        <header class="project-info">
+            <h1>HealthScan</h1>
+            <p><strong>Nguyễn Minh Đức</strong></p>
+            <p>Lớp: 25-28 Tin | Trường: THPT Chuyên Lương Thế Vinh</p>
+            <div class="project-desc">
+                Dự án <b>"HealthScan"</b> sử dụng dữ liệu mảng và thuật toán cơ bản 
+                để hỗ trợ học sinh nhận biết các triệu chứng sức khỏe thường gặp.
             </div>
-        </section>
+        </header>
 
-        <section class="results-section">
-            <h2 id="result-title">Kết quả phân tích triệu chứng</h2>
-            <div id="results" class="cards">
-                <p style="text-align: center; color: #888;">Chưa có dữ liệu. Vui lòng nhập triệu chứng phía trên.</p>
-            </div>
-        </section>
+        <section class="chatbot-section">
+            <h2 class="section-title">Khung Chatbot</h2>
+            
+            <div class="main-grid">
+                <div class="chat-container">
+                    <div id="chatBox" class="chat-box">
+                        <div class="message-wrapper ai-wrapper">
+                            <div class="message ai-message">
+                                Xin chào! Mình là trợ lý <b>HealthScan</b> 🤖<br>
+                                Bạn đang cảm thấy như thế nào? Hãy nhập triệu chứng vào bên dưới nhé.
+                            </div>
+                        </div>
+                    </div>
 
-        <section class="advice-section">
-            <h2>Lời khuyên tổng quát</h2>
-            <div id="adviceBox" class="advice-box">
-                Hệ thống sẽ đưa ra đánh giá tổng quát về tình trạng của bạn tại đây.
-            </div>
-        </section>
-
-        <section class="education">
-            <h2>Cẩm nang sức khỏe nhanh</h2>
-            <div class="cards">
-                <div class="card">
-                    <h3>Quy tắc 20-20-20</h3>
-                    <p>Cứ mỗi 20 phút ngồi máy tính, hãy nhìn xa 20 feet trong 20 giây để bảo vệ mắt.</p>
+                    <div class="input-area">
+                        <input type="text" id="symptomInput" placeholder="Nhập triệu chứng (vd: sốt, đau đầu...)" autocomplete="off">
+                        <button onclick="checkSymptoms()" id="sendBtn" title="Gửi tin nhắn">➤</button>
+                    </div>
                 </div>
-                <div class="card">
-                    <h3>Tư thế ngồi chuẩn</h3>
-                    <p>Giữ lưng thẳng, mắt ngang tầm màn hình để tránh đau vai gáy và gù lưng.</p>
-                </div>
-                <div class="card">
-                    <h3>Uống đủ nước</h3>
-                    <p>Dân chuyên Tin thường quên uống nước khi code. Hãy uống ít nhất 2 lít mỗi ngày.</p>
-                </div>
-            </div>
-        </section>
 
-        <section class="disclaimer">
-            <p>
-                ⚠️ <strong>Lưu ý quan trọng:</strong> Hệ thống chỉ mang tính chất tham khảo học đường. Nếu có triệu chứng nghiêm trọng, hãy đến ngay phòng y tế hoặc bệnh viện gần nhất.
-            </p>
-        </section>
-
-        <section class="author">
-            <h2>Về dự án</h2>
-            <div class="author-card">
-                <h3>Nguyễn Minh Đức</h3>
-                <p><strong>Lớp:</strong> 25-28 Tin | <strong>Trường:</strong> THPT Chuyên Lương Thế Vinh</p>
-                <p>
-                    Dự án "HealthScan AI" ứng dụng cấu trúc dữ liệu mảng (Array) và thuật toán tìm kiếm cơ bản 
-                    để hỗ trợ theo dõi sức khỏe học đường.
-                </p>
+                <aside class="suggestion-panel">
+                    <h3>Bảng gợi ý triệu chứng</h3>
+                    <p class="sub-text">Các triệu chứng thường gặp:</p>
+                    <div class="suggest-tags">
+                        <button onclick="quickSearch('sốt')">🌡 Sốt</button>
+                        <button onclick="quickSearch('đau đầu')">🤕 Đau đầu</button>
+                        <button onclick="quickSearch('ho')">😷 Ho</button>
+                        <button onclick="quickSearch('đau bụng')">🤢 Đau bụng</button>
+                        <button onclick="quickSearch('mỏi mắt')">👀 Mỏi mắt</button>
+                        <button onclick="quickSearch('khó ngủ')">😴 Khó ngủ</button>
+                        <button onclick="quickSearch('đau lưng')">🦴 Đau lưng</button>
+                        <button onclick="quickSearch('mệt mỏi')">😓 Mệt mỏi</button>
+                    </div>
+                </aside>
             </div>
         </section>
     </main>
 
-    <footer>
-        <p>© 2026 HealthScan AI - Designed by Minh Đức</p>
-    </footer>
-
     <script src="script.js"></script>
+    <script>
+        // Hàm bổ trợ cho các nút bấm nhanh
+        function quickSearch(text) {
+            document.getElementById("symptomInput").value = text;
+            checkSymptoms();
+        }
+    </script>
 </body>
+</html>
 
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mẹo Sức Khỏe - HealthScan</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">
+            <span class="logo-icon">⊕</span> <span>HealthScan</span>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Trang chủ</a>
+            <a href="tips.html" class="active">Mẹo sức khỏe</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <header class="page-header">
+            <h1 class="section-title">Cẩm nang sức khỏe học đường</h1>
+            <p>Những mẹo nhỏ giúp bạn duy trì năng lượng và học tập hiệu quả mỗi ngày.</p>
+        </header>
+
+        <section class="tips-grid">
+            <div class="tip-card">
+                <div class="tip-image">🍎</div>
+                <div class="tip-content">
+                    <h3>Chế độ ăn uống</h3>
+                    <p>Ăn đúng giờ, bổ sung nhiều rau xanh và hạn chế đồ ăn nhanh để giữ cơ thể nhẹ nhàng.</p>
+                </div>
+            </div>
+
+            <div class="tip-card">
+                <div class="tip-image">🏃</div>
+                <div class="tip-content">
+                    <h3>Vận động thể chất</h3>
+                    <p>Dành ít nhất 30 phút mỗi ngày để tập thể dục hoặc đi bộ giúp giải tỏa căng thẳng.</p>
+                </div>
+            </div>
+
+            <div class="tip-card">
+                <div class="tip-image">😴</div>
+                <div class="tip-content">
+                    <h3>Giấc ngủ chất lượng</h3>
+                    <p>Ngủ đủ 7-8 tiếng và tránh xa điện thoại 30 phút trước khi ngủ để não bộ nghỉ ngơi.</p>
+                </div>
+            </div>
+
+            <div class="tip-card">
+                <div class="tip-image">💧</div>
+                <div class="tip-content">
+                    <h3>Uống đủ nước</h3>
+                    <p>Đừng đợi đến khi khát mới uống. Hãy luôn mang theo bình nước bên mình khi đến trường.</p>
+                </div>
+            </div>
+
+            <div class="tip-card">
+                <div class="tip-image">🧘</div>
+                <div class="tip-content">
+                    <h3>Sức khỏe tinh thần</h3>
+                    <p>Học cách hít thở sâu và dành thời gian cho sở thích cá nhân để tránh stress học đường.</p>
+                </div>
+            </div>
+
+            <div class="tip-card">
+                <div class="tip-image">💻</div>
+                <div class="tip-content">
+                    <h3>Sức khỏe mắt</h3>
+                    <p>Áp dụng quy tắc 20-20-20 khi ngồi máy tính: mỗi 20 phút nhìn xa 6 m trong 20 giây.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>© 2026 HealthScan - Dự án hỗ trợ học đường bởi Nguyễn Minh Đức</p>
+    </footer>
+</body>
 </html>
