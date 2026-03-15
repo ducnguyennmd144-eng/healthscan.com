@@ -86,110 +86,66 @@ const diseasesDatabase = [
  */
 function checkSymptoms() {
     const inputElement = document.getElementById("symptomInput");
-    const chatBox = document.getElementById("chatBox");
     const userText = inputElement.value.trim();
 
-    // 1. Kiểm tra nếu ô nhập trống
     if (userText === "") return;
 
-    // 2. Hiển thị tin nhắn của người dùng lên màn hình
     appendMessage("user", userText);
-    
-    // Xóa nội dung ô nhập sau khi gửi
     inputElement.value = "";
 
-    // 3. Hiển thị trạng thái "AI đang suy nghĩ..."
     const loadingId = "loading-" + Date.now();
-    const loadingHtml = `<div class="typing-indicator" id="${loadingId}"><span>.</span><span>.</span><span>.</span></div>`;
+    const loadingHtml = `<div class="typing-indicator" id="${loadingId}"><span></span><span></span><span></span></div>`;
     appendMessage("ai", loadingHtml);
 
-    // 4. Tìm kiếm bệnh trong database sau một khoảng trễ nhẹ (giả lập AI phản hồi)
     setTimeout(() => {
-        // Xóa dòng loading
         const loadingElement = document.getElementById(loadingId);
-        if (loadingElement) loadingElement.closest('.message').remove();
+        if (loadingElement) loadingElement.closest('.message-wrapper').remove();
 
         const inputLow = userText.toLowerCase();
         let matchedDiseases = diseasesDatabase.filter(disease => {
             return disease.keywords.some(keyword => inputLow.includes(keyword));
         });
 
-        // 5. Tạo nội dung phản hồi
         if (matchedDiseases.length > 0) {
-            let responseHtml = `<p>Dựa trên các triệu chứng bạn mô tả, HealthScan tìm thấy thông tin sau:</p>`;
-            
+            let responseHtml = `<p>HealthScan tìm thấy các thông tin sau:</p>`;
             matchedDiseases.forEach(disease => {
-                // Xác định màu sắc dựa trên mức độ rủi ro
-                let riskColor = "#27ae60"; // Thấp (Xanh lá)
-                let riskIcon = "✅";
-
-                if (disease.risk === "Trung bình") {
-                    riskColor = "#f39c12"; // Trung bình (Vàng cam)
-                    riskIcon = "⚠️";
-                } else if (disease.risk === "Cao" || disease.risk === "Rất cao") {
-                    riskColor = "#e74c3c"; // Cao/Rất cao (Đỏ)
-                    riskIcon = "🚨";
-                }
+                let riskColor = disease.risk === "Trung bình" ? "#f39c12" : (disease.risk === "Cao" || disease.risk === "Rất cao" ? "#e74c3c" : "#27ae60");
+                let riskIcon = disease.risk === "Trung bình" ? "⚠️" : (disease.risk === "Cao" || disease.risk === "Rất cao" ? "🚨" : "✅");
 
                 responseHtml += `
                     <div class="disease-card" style="border-left: 5px solid ${riskColor};">
-                        <strong style="color: ${riskColor}; font-size: 1.1em;">${riskIcon} ${disease.name}</strong><br>
-                        <small style="color: #7f8c8d;">Nhóm: ${disease.group} | Rủi ro: ${disease.risk}</small>
-                        <div style="margin-top: 8px; border-top: 1px solid #eee; padding-top: 5px;">
-                            <b>💡 Lời khuyên:</b> ${disease.advice}
-                        </div>
-                    </div>
-                `;
+                        <strong style="color: ${riskColor};">${riskIcon} ${disease.name}</strong><br>
+                        <small>Nhóm: ${disease.group} | Rủi ro: ${disease.risk}</small>
+                        <p style="margin-top:5px;"><b>💡 Lời khuyên:</b> ${disease.advice}</p>
+                    </div>`;
             });
-
-            responseHtml += `
-                <p style="font-size: 0.85em; margin-top: 15px; color: #95a5a6; font-style: italic;">
-                    * Lưu ý: Đây là dữ liệu tham khảo dựa trên thuật toán mảng. Nếu triệu chứng không thuyên giảm, hãy báo ngay cho thầy cô hoặc phòng y tế trường.
-                </p>`;
-            
             appendMessage("ai", responseHtml);
         } else {
-            appendMessage("ai", "Xin lỗi, mình chưa tìm thấy thông tin khớp với mô tả này. Bạn thử nhập từ khóa ngắn gọn hơn như 'đau bụng', 'nhức đầu' hoặc 'mỏi mắt' xem sao nhé?");
+            appendMessage("ai", "Mình chưa tìm thấy thông tin này. Bạn thử dùng từ khóa ngắn như 'sốt', 'đau bụng' xem?");
         }
+    }, 800);
+}
 
-/**
- * Hàm phụ trợ để đẩy tin nhắn vào khung chat
- * @param {string} sender - 'user' hoặc 'ai'
- * @param {string} text - Nội dung tin nhắn (chấp nhận HTML)
- */
 function appendMessage(sender, text) {
     const chatBox = document.getElementById("chatBox");
-    const messageWrapper = document.createElement("div");
-    
-    // Thêm class để định dạng CSS sau này
-    messageWrapper.className = `message-wrapper ${sender}-wrapper`;
-    
-    const messageContent = `
-        <div class="message ${sender}-message">
-            ${text}
-        </div>
-    `;
-    
-    messageWrapper.innerHTML = messageContent;
-    chatBox.appendChild(messageWrapper);
-
-    // Tự động cuộn xuống cuối cùng khi có tin nhắn mới
+    const wrapper = document.createElement("div");
+    wrapper.className = `message-wrapper ${sender}-wrapper`;
+    wrapper.innerHTML = `<div class="message ${sender}-message">${text}</div>`;
+    chatBox.appendChild(wrapper);
     chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-/**
- * Lắng nghe sự kiện nhấn phím Enter để gửi tin nhắn tiện hơn
- */
+// Lắng nghe phím Enter và hàm tìm nhanh
 document.addEventListener("DOMContentLoaded", () => {
-    const inputField = document.getElementById("symptomInput");
-    if (inputField) {
-        inputField.addEventListener("keypress", function(event) {
-            if (event.key === "Enter") {
-                event.preventDefault();
-                checkSymptoms();
-            }
-        });
-    }
+    document.getElementById("symptomInput").addEventListener("keypress", (e) => {
+        if (e.key === "Enter") checkSymptoms();
+    });
+});
+
+function quickSearch(text) {
+    document.getElementById("symptomInput").value = text;
+    checkSymptoms();
+}
 });
         adviceBox.innerHTML = "Nếu triệu chứng nặng, hãy gặp bác sĩ ngay.";
     }
