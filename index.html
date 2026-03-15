@@ -3,155 +3,175 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HealthScan - Trợ lý sức khỏe học đường</title>
-
-    <!-- CSS -->
+    <title>HealthScan Pro | Trợ lý Sức khỏe Học đường AI</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<!-- NAVBAR -->
-<nav class="navbar">
-    <div class="logo">
-        ⊕ HealthScan
+    <div class="top-announcement">
+        Hỗ trợ y tế học đường 24/7 | <span>Cập nhật mới nhất: Version 2.0</span>
     </div>
 
-    <div class="nav-links">
-        <a href="index.html" class="active">Trang chủ</a>
-        <a href="tips.html">Mẹo sức khỏe</a>
-    </div>
-</nav>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <div class="logo-circle">
+                    <i class="fa-solid fa-plus-plus"></i> <span class="pulse"></span>
+                </div>
+                <div class="logo-text">
+                    <span class="brand">HealthScan</span>
+                    <span class="tagline">Medical AI Assistant</span>
+                </div>
+            </div>
+            
+            <div class="nav-links">
+                <a href="index.html" class="active"><i class="fa-solid fa-house"></i> Trang chủ</a>
+                <a href="tips.html"><i class="fa-solid fa-lightbulb"></i> Mẹo sức khỏe</a>
+                <button id="themeToggle" title="Chuyển chế độ sáng/tối">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
 
+    <main class="container">
+        <header class="dashboard-header">
+            <div class="header-content">
+                <span class="badge">Dành cho học sinh THPT</span>
+                <h1>Hệ thống phân tích triệu chứng <span class="highlight">HealthScan</span></h1>
+                <p class="author-label">Người thực hiện: <strong>Nguyễn Minh Đức</strong> — Lớp 25-28 Tin</p>
+            </div>
+            <div class="system-status">
+                <div class="status-item">
+                    <span class="dot green"></span>
+                    <span>AI Engine: Online</span>
+                </div>
+                <div class="status-item" id="realTime">
+                    00:00:00
+                </div>
+            </div>
+        </header>
 
-<!-- MAIN -->
-<main class="container">
+        <section class="chatbot-section">
+            <div class="main-grid">
+                
+                <div class="chat-wrapper">
+                    <div class="chat-container">
+                        <div class="chat-header">
+                            <div class="bot-info">
+                                <img src="https://ui-avatars.com/api/?name=Health+Scan&background=2ecc71&color=fff" alt="Bot Avatar" class="bot-avatar">
+                                <div>
+                                    <h3>Trợ lý HealthScan</h3>
+                                    <span class="online-text">Đang sẵn sàng trả lời...</span>
+                                </div>
+                            </div>
+                            <div class="chat-actions">
+                                <button onclick="clearChat()" title="Xóa lịch sử">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                                <button onclick="window.print()" title="Xuất báo cáo">
+                                    <i class="fa-solid fa-file-export"></i>
+                                </button>
+                            </div>
+                        </div>
 
-<header class="project-info">
-<h1>HealthScan</h1>
+                        <div id="chatBox" class="chat-box">
+                            <div class="message-wrapper ai-wrapper">
+                                <div class="message ai-message">
+                                    <div class="msg-content">
+                                        <p>Chào Đức và các bạn! 👋 Mình là AI của <strong>HealthScan</strong>.</p>
+                                        <p>Đừng để những cơn đau mỏi làm ảnh hưởng đến việc học. Hãy mô tả triệu chứng của bạn bên dưới nhé!</p>
+                                    </div>
+                                    <span class="msg-time">Vừa xong</span>
+                                </div>
+                            </div>
+                        </div>
 
-<p><strong>Nguyễn Minh Đức</strong></p>
-<p>Lớp: 25-28 Tin | Trường: THPT Chuyên Lương Thế Vinh</p>
+                        <div class="input-area">
+                            <div class="input-container">
+                                <i class="fa-solid fa-magnifying-glass-chart input-icon"></i>
+                                <input type="text" id="symptomInput" placeholder="Nhập triệu chứng (vd: sốt, mỏi mắt, đau họng...)" autocomplete="off">
+                                <button onclick="checkSymptoms()" id="sendBtn">
+                                    <span>Gửi yêu cầu</span>
+                                    <i class="fa-solid fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="disclaimer">* Lưu ý: Kết quả từ AI chỉ mang tính tham khảo. Hãy đến phòng y tế nếu cần thiết.</p>
+                </div>
 
-<div class="project-desc">
-Dự án <b>HealthScan</b> sử dụng dữ liệu mảng và thuật toán đơn giản để giúp học sinh nhận biết các triệu chứng sức khỏe phổ biến.
-</div>
+                <aside class="side-panel">
+                    <div class="panel-card">
+                        <h3><i class="fa-solid fa-bolt"></i> Phím tắt nhanh</h3>
+                        <p class="panel-desc">Chọn nhanh các triệu chứng phổ biến:</p>
+                        <div class="suggest-tags">
+                            <button class="tag" onclick="quickSearch('sốt')">🌡️ Sốt cao</button>
+                            <button class="tag" onclick="quickSearch('đau đầu')">🤕 Đau đầu</button>
+                            <button class="tag" onclick="quickSearch('ho')">😷 Ho khan</button>
+                            <button class="tag" onclick="quickSearch('mỏi mắt')">👀 Mỏi mắt</button>
+                            <button class="tag" onclick="quickSearch('đau bụng')">🤢 Đau bụng</button>
+                            <button class="tag" onclick="quickSearch('đau vai gáy')">🦴 Đau vai gáy</button>
+                        </div>
+                    </div>
 
-</header>
+                    <div class="panel-card progress-card">
+                        <h3><i class="fa-solid fa-chart-line"></i> Hiệu năng hệ thống</h3>
+                        <div class="progress-item">
+                            <span>Độ chính xác thuật toán</span>
+                            <div class="progress-bar"><div class="fill" style="width: 92%"></div></div>
+                        </div>
+                        <div class="progress-item">
+                            <span>Tốc độ xử lý AI</span>
+                            <div class="progress-bar"><div class="fill" style="width: 98%"></div></div>
+                        </div>
+                    </div>
+                    
+                    <div class="info-card">
+                        <i class="fa-solid fa-circle-info"></i>
+                        <p>Dự án đạt giải nhất cuộc thi sáng tạo Kỹ thuật THPT (Demo)</p>
+                    </div>
+                </aside>
+                
+            </div>
+        </section>
+    </main>
 
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-logo">⊕ HealthScan</div>
+            <div class="footer-links">
+                <a href="#">Về dự án</a>
+                <a href="#">Điều khoản</a>
+                <a href="#">Liên hệ y tế</a>
+            </div>
+            <div class="copyright">© 2026 Designed by Minh Đức — THPT Lương Thế Vinh</div>
+        </div>
+    </footer>
 
+    <script>
+        // Hiển thị thời gian thực
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('realTime').innerText = now.toLocaleTimeString('vi-VN');
+        }
+        setInterval(updateTime, 1000);
 
-<section class="chatbot-section">
-
-<h2 class="section-title">Trợ lý sức khỏe</h2>
-
-<div class="main-grid">
-
-<!-- CHAT -->
-<div class="chat-container">
-
-<div id="chatBox" class="chat-box">
-
-<div class="message-wrapper ai-wrapper">
-<div class="message ai-message">
-
-Xin chào 👋<br>
-Mình là trợ lý <b>HealthScan</b> 🤖
-
-<br><br>
-
-Bạn đang cảm thấy như thế nào?  
-Hãy nhập triệu chứng như:
-
-<br>
-
-• sốt  
-• đau đầu  
-• ho  
-• đau bụng  
-
-</div>
-</div>
-
-</div>
-
-
-<!-- INPUT -->
-<div class="input-area">
-
-<input 
-type="text" 
-id="symptomInput" 
-placeholder="Nhập triệu chứng (ví dụ: sốt, đau đầu...)"
-autocomplete="off"
->
-
-<button onclick="checkSymptoms()" id="sendBtn">
-➤
-</button>
-
-</div>
-
-</div>
-
-
-
-<!-- GỢI Ý -->
-<aside class="suggestion-panel">
-
-<h3>Bảng gợi ý</h3>
-
-<p class="sub-text">
-Triệu chứng thường gặp
-</p>
-
-<div class="suggest-tags">
-
-<button onclick="quickSearch('sốt')">🌡 Sốt</button>
-
-<button onclick="quickSearch('đau đầu')">🤕 Đau đầu</button>
-
-<button onclick="quickSearch('ho')">😷 Ho</button>
-
-<button onclick="quickSearch('đau bụng')">🤢 Đau bụng</button>
-
-<button onclick="quickSearch('mỏi mắt')">👀 Mỏi mắt</button>
-
-<button onclick="quickSearch('khó ngủ')">😴 Khó ngủ</button>
-
-<button onclick="quickSearch('đau lưng')">🦴 Đau lưng</button>
-
-<button onclick="quickSearch('mệt mỏi')">😓 Mệt mỏi</button>
-
-</div>
-
-</aside>
-
-</div>
-
-</section>
-
-</main>
-
-
-
-<footer class="footer">
-© 2026 HealthScan — Dự án học sinh
-</footer>
-
-
-
-<!-- JS -->
-<script src="script.js"></script>
-
-<script>
-
-function quickSearch(text){
-document.getElementById("symptomInput").value = text
-checkSymptoms()
-}
-
-</script>
-
+        // Tính năng xóa chat
+        function clearChat() {
+            if(confirm("Bạn có chắc chắn muốn xóa lịch sử tư vấn này không?")) {
+                const chatBox = document.getElementById('chatBox');
+                chatBox.innerHTML = '';
+                // Thêm lại lời chào
+                location.reload(); 
+            }
+        }
+    </script>
+    <script src="script.js"></script>
 </body>
 </html>
