@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HealthScan AI | Trợ lý Sức khỏe Học đường</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@700&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -16,18 +15,13 @@
             --secondary: #10b981;
             --bg-body: #f1f5f9;
             --bg-card: #ffffff;
-            --text-main: #0f172a;
+            --text-main: #0f172a; /* Màu xanh đen đậm chuẩn UI */
             --text-muted: #64748b;
             --glass: rgba(255, 255, 255, 0.8);
             --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Inter', sans-serif;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
 
         body {
             background-color: var(--bg-body);
@@ -35,42 +29,60 @@
             height: 100vh;
             display: flex;
             flex-direction: column;
-            overflow: hidden; /* Cố định màn hình, chỉ cuộn box chat */
+            overflow: hidden;
         }
 
-        /* --- NAVBAR --- */
+        /* --- NAVBAR TINH CHỈNH ĐỒNG BỘ --- */
         .navbar {
             background: var(--bg-card);
-            padding: 1rem 2rem;
+            padding: 0.8rem 5%; /* Chỉnh lại padding cho khớp tips.html */
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid #e2e8f0;
             z-index: 100;
+            position: sticky; top: 0;
         }
 
-        .logo {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 1.5rem;
-            color: var(--primary);
+        .logo-container {
             display: flex;
             align-items: center;
+            text-decoration: none;
             gap: 10px;
+        }
+
+        .logo-icon {
+            color: var(--primary);
+            font-size: 1.6rem;
+        }
+
+        .logo-text {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.5rem;
+            color: #0f172a;
+            font-weight: 800; /* Ép độ đậm 800 cho logo */
+            letter-spacing: -0.5px;
+        }
+
+        .logo-text span { 
+            color: var(--primary); 
+            font-weight: 800;
         }
 
         .nav-links {
             display: flex;
-            gap: 20px;
+            gap: 25px;
         }
 
         .nav-links a {
             text-decoration: none;
             color: var(--text-muted);
-            font-weight: 500;
+            font-weight: 700; /* Làm chữ menu đậm hơn cho rõ */
             transition: 0.3s;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 8px;
+            font-size: 1rem;
         }
 
         .nav-links a:hover, .nav-links a.active {
@@ -89,7 +101,7 @@
             height: calc(100vh - 120px);
         }
 
-        /* --- SIDEBAR (Left) --- */
+        /* --- SIDEBAR --- */
         .sidebar {
             background: var(--bg-card);
             border-radius: 20px;
@@ -105,43 +117,40 @@
             border-bottom: 1px solid #f1f5f9;
         }
 
-        .user-profile h2 { font-size: 1.1rem; margin-bottom: 5px; }
+        .user-profile h2 { font-family: 'Plus Jakarta Sans'; font-size: 1.2rem; margin-bottom: 5px; }
         .user-profile p { font-size: 0.85rem; color: var(--text-muted); }
 
         .quick-actions h3 {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 1px;
             color: var(--text-muted);
             margin-bottom: 15px;
         }
 
-        .tag-cloud {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
+        .tag-cloud { display: flex; flex-direction: column; gap: 10px; }
 
         .tag-btn {
-            background: #eff6ff;
-            border: 1px solid #dbeafe;
-            color: var(--primary-dark);
-            padding: 8px 15px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            color: var(--text-main);
+            padding: 12px 15px;
             border-radius: 12px;
             font-size: 0.85rem;
             cursor: pointer;
             transition: 0.2s;
-            width: 100%;
             text-align: left;
+            font-weight: 500;
         }
 
         .tag-btn:hover {
-            background: var(--primary);
-            color: white;
+            background: #eff6ff;
+            border-color: var(--primary);
+            color: var(--primary);
             transform: translateX(5px);
         }
 
-        /* --- CHAT AREA (Right) --- */
+        /* --- CHAT AREA --- */
         .chat-main {
             background: var(--bg-card);
             border-radius: 20px;
@@ -149,7 +158,6 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            position: relative;
         }
 
         .chat-header {
@@ -161,135 +169,47 @@
         }
 
         .status-online {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.9rem;
-            color: var(--secondary);
-            font-weight: 600;
+            display: flex; align-items: center; gap: 8px;
+            font-size: 0.9rem; color: var(--secondary); font-weight: 600;
         }
 
         .status-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--secondary);
-            border-radius: 50%;
-            animation: pulse 2s infinite;
+            width: 8px; height: 8px; background: var(--secondary);
+            border-radius: 50%; animation: pulse 2s infinite;
         }
 
-        /* KHUNG CHAT QUAN TRỌNG - SỬA LỖI CUỘN */
         .chat-box {
-            flex: 1;
-            padding: 25px;
-            overflow-y: auto;
-            background-color: #f8fafc;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            scroll-behavior: smooth;
+            flex: 1; padding: 25px; overflow-y: auto;
+            background-color: #f8fafc; display: flex;
+            flex-direction: column; gap: 20px; scroll-behavior: smooth;
         }
 
-        .chat-box::-webkit-scrollbar { width: 6px; }
-        .chat-box::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-
-        /* BONG BÓNG CHAT */
-        .message-wrapper {
-            display: flex;
-            flex-direction: column;
-            max-width: 80%;
-            animation: fadeIn 0.3s ease;
-        }
-
+        .message-wrapper { display: flex; flex-direction: column; max-width: 80%; animation: fadeIn 0.3s ease; }
         .ai-wrapper { align-self: flex-start; }
         .user-wrapper { align-self: flex-end; }
 
-        .message {
-            padding: 15px 20px;
-            border-radius: 18px;
-            font-size: 0.95rem;
-            line-height: 1.6;
-            position: relative;
-        }
+        .message { padding: 15px 20px; border-radius: 18px; font-size: 0.95rem; line-height: 1.6; }
+        .ai-message { background: white; color: var(--text-main); border-bottom-left-radius: 4px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+        .user-message { background: var(--primary); color: white; border-bottom-right-radius: 4px; }
 
-        .ai-message {
-            background: white;
-            color: var(--text-main);
-            border-bottom-left-radius: 4px;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-        }
+        .msg-time { font-size: 0.7rem; color: var(--text-muted); margin-top: 5px; }
 
-        .user-message {
-            background: var(--primary);
-            color: white;
-            border-bottom-right-radius: 4px;
-        }
-
-        .msg-time {
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            margin-top: 5px;
-        }
-
-        /* INPUT AREA */
-        .input-container {
-            padding: 20px 25px;
-            background: white;
-            border-top: 1px solid #f1f5f9;
-        }
-
+        .input-container { padding: 20px 25px; background: white; border-top: 1px solid #f1f5f9; }
         .input-wrapper {
-            background: #f1f5f9;
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            padding: 5px 15px;
-            transition: 0.3s;
-            border: 2px solid transparent;
+            background: #f1f5f9; border-radius: 15px; display: flex;
+            align-items: center; padding: 5px 15px; border: 2px solid transparent; transition: 0.3s;
         }
-
-        .input-wrapper:focus-within {
-            background: white;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
-        }
-
-        .input-wrapper input {
-            flex: 1;
-            background: transparent;
-            border: none;
-            padding: 12px;
-            outline: none;
-            font-size: 1rem;
-        }
+        .input-wrapper:focus-within { background: white; border-color: var(--primary); }
+        .input-wrapper input { flex: 1; background: transparent; border: none; padding: 12px; outline: none; }
 
         .send-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: 0.3s;
+            background: var(--primary); color: white; border: none;
+            width: 40px; height: 40px; border-radius: 10px; cursor: pointer;
         }
 
-        .send-btn:hover { background: var(--primary-dark); transform: scale(1.05); }
-
-        /* DISEASE CARD TRONG KẾT QUẢ */
-        .disease-card {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 15px;
-            margin-top: 10px;
-            border-left: 5px solid var(--primary);
-        }
-
-        /* KEYFRAMES */
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* RESPONSIVE */
         @media (max-width: 900px) {
             .app-container { grid-template-columns: 1fr; }
             .sidebar { display: none; }
@@ -299,18 +219,18 @@
 <body>
 
     <nav class="navbar">
-        <div class="logo">
-            <i class="fa-solid fa-hand-holding-medical"></i>
-            <span>HealthScan<b style="color:var(--text-main)">AI</b></span>
-        </div>
-    <div class="nav-links">
-        <a href="index.html" class="active"><i class="fa-solid fa-comment-medical"></i> <span>Chẩn đoán</span></a>
-        <a href="tips.html"><i class="fa-solid fa-lightbulb"></i> <span>Mẹo sức khỏe</span></a>
-    </div>
+        <a href="index.html" class="logo-container">
+            <i class="fa-solid fa-hand-holding-medical logo-icon"></i>
+            <span class="logo-text">HealthScan<span>AI</span></span>
+        </a>
+        
+        <div class="nav-links">
+            <a href="index.html" class="active"><i class="fa-solid fa-comment-medical"></i> <span>Chẩn đoán</span></a>
+            <a href="tips.html"><i class="fa-solid fa-lightbulb"></i> <span>Mẹo sức khỏe</span></a>
+            </div>
     </nav>
 
     <main class="app-container">
-        
         <aside class="sidebar">
             <div class="user-profile">
                 <p>Xin chào 👋</p>
@@ -364,16 +284,14 @@
                 </div>
             </div>
         </section>
-
     </main>
 
-    <footer style="text-align: center; font-size: 0.8rem; color: var(--text-muted); padding-bottom: 10px;">
+    <footer style="text-align: center; font-size: 0.8rem; color: var(--text-muted); padding: 20px 0;">
         &copy; 2026 HealthScan Pro - Phát triển bởi Minh Đức | Dự án Khoa học kỹ thuật
     </footer>
 
     <script src="script.js"></script>
     <script>
-        // Cập nhật giờ thời gian thực
         function updateTime() {
             const now = new Date();
             document.getElementById("realTime").innerText = now.toLocaleTimeString('vi-VN');
@@ -381,10 +299,10 @@
         setInterval(updateTime, 1000);
         updateTime();
 
-        // Xử lý nút Enter
         document.getElementById("symptomInput").addEventListener("keydown", function(e) {
             if(e.key === "Enter") {
-                checkSymptoms();
+                // Giả sử hàm checkSymptoms() nằm trong script.js
+                if(typeof checkSymptoms === 'function') checkSymptoms();
             }
         });
     </script>
