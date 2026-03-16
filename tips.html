@@ -10,7 +10,7 @@
 
     <style>
         :root {
-            --primary: #3b82f6; /* Màu xanh chủ đạo đồng bộ index */
+            --primary: #3b82f6;
             --primary-hover: #2563eb;
             --bg: #f8fafc;
             --text-main: #1e293b;
@@ -18,9 +18,9 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
-        body { background-color: var(--bg); color: var(--text-main); }
+        body { background-color: var(--bg); color: var(--text-main); line-height: 1.6; }
 
-        /* --- NAVBAR (ĐỒNG BỘ HOÀN TOÀN VỚI INDEX.HTML) --- */
+        /* --- NAVBAR --- */
         .navbar {
             background: white;
             padding: 0.8rem 5%;
@@ -68,8 +68,6 @@
             transition: 0.3s;
         }
 
-        .nav-links a i { font-size: 1rem; }
-
         .nav-links a:hover, .nav-links a.active {
             color: var(--primary);
         }
@@ -86,12 +84,6 @@
             font-size: 2.5rem;
             color: #0f172a;
             margin-bottom: 12px;
-            letter-spacing: -1px;
-        }
-
-        .title-section p {
-            color: var(--text-muted);
-            font-size: 1.1rem;
         }
 
         /* --- GRID HỆ THỐNG THẺ --- */
@@ -108,46 +100,22 @@
             background: white;
             border-radius: 24px;
             overflow: hidden;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            transition: 0.4s;
             border: 1px solid #f1f5f9;
         }
 
         .tip-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
-            border-color: #dbeafe;
         }
 
-        .tip-image {
-            width: 100%;
-            height: 220px;
-            overflow: hidden;
-            background: #f1f5f9;
-        }
-
-        .tip-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: 0.6s;
-        }
-
+        .tip-image { width: 100%; height: 220px; overflow: hidden; background: #f1f5f9; }
+        .tip-image img { width: 100%; height: 100%; object-fit: cover; transition: 0.6s; }
         .tip-card:hover .tip-image img { transform: scale(1.08); }
 
         .tip-content { padding: 24px; }
-        .tip-content h3 {
-            font-family: 'Plus Jakarta Sans';
-            font-size: 1.25rem;
-            margin-bottom: 12px;
-            color: #0f172a;
-        }
-
-        .tip-content p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
+        .tip-content h3 { font-family: 'Plus Jakarta Sans'; margin-bottom: 12px; }
 
         footer {
             text-align: center;
@@ -159,24 +127,22 @@
         }
 
         @media (max-width: 768px) {
-            .nav-links span { display: none; } /* Ẩn chữ trên mobile, giữ icon */
-            .title-section h1 { font-size: 2rem; }
+            .nav-links span { display: none; }
         }
     </style>
 </head>
 <body>
 
-        <nav class="navbar">
-        <a href="index.html" class="logo">
-            <i class="fa-solid fa-hand-holding-medical"></i>
-            <span>HealthScan<b style="color:var(--text-main)">AI</b></span>
+    <nav class="navbar">
+        <a href="index.html" class="logo-container">
+            <i class="fa-solid fa-hand-holding-medical logo-icon"></i>
+            <span class="logo-text">HealthScan<span>AI</span></span>
         </a>
         
         <div class="nav-links">
             <a href="index.html"><i class="fa-solid fa-comment-medical"></i> <span>Chẩn đoán</span></a>
-            
             <a href="tips.html" class="active"><i class="fa-solid fa-lightbulb"></i> <span>Mẹo sức khỏe</span></a>
-        </div>
+            </div>
     </nav>
 
     <div class="title-section">
@@ -214,14 +180,22 @@
                 <p>Rau xanh cung cấp chất xơ và vitamin giúp hệ tiêu hóa khỏe mạnh, tránh mệt mỏi sau khi ăn.</p>
             </div>
         </article>
-        
-        </main>
+    </main>
 
     <footer>
         <div id="realTime" style="margin-bottom: 10px; font-weight: 600; color: var(--primary);">00:00:00</div>
         <p>&copy; 2026 HealthScan Pro - Phát triển bởi Nguyễn Minh Đức | Dự án Khoa học kỹ thuật</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        // Cập nhật thời gian thực
+        function updateTime() {
+            const now = new Date();
+            const element = document.getElementById("realTime");
+            if(element) element.innerText = now.toLocaleTimeString('vi-VN');
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+    </script>
 </body>
 </html>
