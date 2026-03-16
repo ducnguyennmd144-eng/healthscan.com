@@ -1,9 +1,16 @@
 /**
- * HealthScan Pro 
- * Phiên bản: 3.3 (Tối trải nghiệm, Highlight Keywords & Safety First)
+ * HealthScan AI – Hệ thống hỗ trợ phân tích triệu chứng sức khỏe
+ * --------------------------------------------------------------
+ * Phiên bản: 3.3
  * Tác giả: Nguyễn Minh Đức
+ * Mô tả:
+ * Chương trình mô phỏng trợ lý y tế sử dụng phương pháp
+ * so khớp từ khóa để phân tích triệu chứng người dùng
+ * và gợi ý các bệnh có khả năng liên quan.
+ * 
+ * Lưu ý:
+ * Kết quả chỉ mang tính tham khảo, không thay thế chẩn đoán y khoa.
  */
-
 
 // 1. 150 loại bệnh thường gặp ở học sinh
 const diseasesDatabase = [
@@ -147,14 +154,16 @@ const chatBox = document.getElementById("chatBox");
 const inputField = document.getElementById("symptomInput");
 const sendBtn = document.getElementById("sendBtn");
 
-// Hàm lọc ký tự đặc biệt để bảo mật
+// Hàm xử lí ký tự đầu vào
+// Chuyển đổi ký tự HTML để tránh lỗi bảo mật
 function escapeHTML(str) {
     const p = document.createElement("p");
     p.textContent = str;
     return p.innerHTML;
 }
 
-// 3. LOGIC HIỂN THỊ TIN NHẮN
+// 3. Hệ thống hiển thị tin nhắn
+// Quản lý hiển thị tin nhắn người dùng và AI
 function appendMessage(sender, content, isHTML = false) {
     if (!chatBox) return;
     const wrapper = document.createElement("div");
