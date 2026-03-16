@@ -1,11 +1,11 @@
 /**
- * HealthScan Pro - Core Logic Engine
- * Phiên bản: 3.1 (ProVip - Tối ưu đa trang & Loại bỏ Support)
+ * HealthScan Pro 
+ * Phiên bản: 3.3 (Tối trải nghiệm, Highlight Keywords & Safety First)
  * Tác giả: Nguyễn Minh Đức
  */
 
 
-// 1. 150 loại bệnh học sinh thường gặp
+// 1. 150 loại bệnh thường gặp ở học sinh
 const diseasesDatabase = [
     /* --- HÔ HẤP (20 bệnh) --- */
     { name: "Cảm cúm", group: "Hô hấp", keywords: ["sốt", "ho", "sổ mũi", "mệt mỏi", "đau người"], risk: "Trung bình", advice: "Nghỉ ngơi, uống nhiều nước ấm và bổ sung vitamin C." },
@@ -142,17 +142,21 @@ const diseasesDatabase = [
     { name: "Hàng loạt lây nhiễm tại lớp học (outbreak)", group: "Truyền nhiễm", keywords: ["nhiều học sinh cùng triệu chứng", "tăng số ca"], risk: "Cao", advice: "Báo y tế trường, cách ly và tăng cường vệ sinh." }
 ];
 
-export default diseasesDatabase;
-
-
-// 2. KHỞI TẠO BIẾN GIAO DIỆN (Sử dụng let để tránh lỗi nếu phần tử không tồn tại)
+// 2. KHỞI TẠO BIẾN GIAO DIỆN
 const chatBox = document.getElementById("chatBox");
 const inputField = document.getElementById("symptomInput");
 const sendBtn = document.getElementById("sendBtn");
 
-// Hàm thêm tin nhắn vào khung chat
+// Hàm lọc ký tự đặc biệt để bảo mật
+function escapeHTML(str) {
+    const p = document.createElement("p");
+    p.textContent = str;
+    return p.innerHTML;
+}
+
+// 3. LOGIC HIỂN THỊ TIN NHẮN
 function appendMessage(sender, content, isHTML = false) {
-    if (!chatBox) return; // CHẶN LỖI: Nếu không có chatBox (đang ở tips.html) thì thoát hàm
+    if (!chatBox) return;
     const wrapper = document.createElement("div");
     wrapper.className = `message-wrapper ${sender}-wrapper`;
     
@@ -169,7 +173,6 @@ function appendMessage(sender, content, isHTML = false) {
     chatBox.scrollTo({ top: chatBox.scrollHeight, behavior: 'smooth' });
 }
 
-// Hiệu ứng "AI đang suy nghĩ"
 function showTyping() {
     if (!chatBox) return;
     const typingDiv = document.createElement("div");
@@ -177,9 +180,7 @@ function showTyping() {
     typingDiv.className = "message-wrapper ai-wrapper";
     typingDiv.innerHTML = `
         <div class="message ai-message">
-            <div class="typing-dots">
-                <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-            </div>
+            <div class="typing-dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
         </div>
     `;
     chatBox.appendChild(typingDiv);
@@ -191,7 +192,7 @@ function removeTyping() {
     if (indicator) indicator.remove();
 }
 
-// 3. THUẬT TOÁN PHÂN TÍCH TRIỆU CHỨNG
+// 4. THUẬT TOÁN PHÂN TÍCH (ĐÃ TỐI ƯU TÍNH ĐIỂM)
 function checkSymptoms() {
     if (!inputField) return;
     const text = inputField.value.trim();
@@ -208,87 +209,78 @@ function checkSymptoms() {
 
         diseasesDatabase.forEach(disease => {
             let score = 0;
+            let matchedKeywords = [];
+
             disease.keywords.forEach(keyword => {
-                if (textLower.includes(keyword)) {
+                if (textLower.includes(keyword.toLowerCase())) {
                     score += 10;
-                    if (keyword.length > 5) score += 5;
+                    // Cộng thêm điểm ưu tiên cho từ khóa dài hoặc mức độ rủi ro
+                    if (disease.risk === "Rất cao") score += 5; 
+                    matchedKeywords.push(keyword);
                 }
             });
-            if (score > 0) results.push({ ...disease, score });
+
+            if (score > 0) {
+                results.push({ ...disease, score, matchedKeywords });
+            }
         });
 
+        // Sắp xếp: Ưu tiên điểm cao nhất, sau đó đến rủi ro cao nhất
         results.sort((a, b) => b.score - a.score);
 
         if (results.length === 0) {
-            appendMessage("ai", "Xin lỗi Đức, mình chưa nhận diện được triệu chứng này. Bạn hãy thử mô tả kỹ hơn hoặc nhập các từ khóa như: 'sốt', 'đau bụng', 'mỏi mắt' nhé!");
+            appendMessage("ai", `Chào Đức, mình chưa xác định rõ triệu chứng này. Bạn mô tả kỹ hơn (ví dụ: đau ở đâu, có sốt không...) để mình hỗ trợ tốt hơn nhé!`);
         } else {
-            renderDiseaseCards(results);
+            renderDiseaseCards(results, textLower);
         }
     }, 800);
 }
 
-// 4. RENDER KẾT QUẢ
-function renderDiseaseCards(results) {
-    let headerMsg = "Dựa trên các triệu chứng bạn cung cấp, đây là phân tích từ hệ thống:";
-    appendMessage("ai", headerMsg);
+// 5. RENDER KẾT QUẢ CÓ HIGHLIGHT
+function renderDiseaseCards(results, userInput) {
+    appendMessage("ai", "Dựa trên các triệu chứng bạn cung cấp, đây là phân tích của mình:");
 
     results.slice(0, 2).forEach((disease, index) => {
         const riskColor = disease.risk === "Rất cao" ? "#ef4444" : (disease.risk === "Cao" ? "#f59e0b" : "#10b981");
+        
+        // Highlight các từ khóa mà người dùng đã nhập trúng
+        let adviceHighlighted = disease.advice;
+        disease.matchedKeywords.forEach(kw => {
+            const reg = new RegExp(`(${kw})`, 'gi');
+            adviceHighlighted = adviceHighlighted.replace(reg, `<b style="color:${riskColor}">$1</b>`);
+        });
+
         const cardHTML = `
-            <div class="disease-card" style="border-left: 5px solid ${riskColor}">
+            <div class="disease-card" style="border-left: 5px solid ${riskColor}; background: #ffffff; padding: 15px; border-radius: 12px; margin-bottom: 15px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px">
                     <strong style="font-size:1.1rem; color:#1e293b">${index === 0 ? '⭐ ' : ''}${disease.name}</strong>
-                    <span style="font-size:0.75rem; background:#f1f5f9; padding:2px 8px; border-radius:10px">${disease.group}</span>
+                    <span style="font-size:0.75rem; background:#f1f5f9; padding:2px 8px; border-radius:10px; color: #64748b">${disease.group}</span>
                 </div>
                 <div style="font-size:0.9rem; margin-bottom:10px">
-                    <span style="color:var(--text-muted)">Mức độ rủi ro:</span> 
+                    <span style="color:#64748b">Mức độ rủi ro:</span> 
                     <b style="color:${riskColor}">${disease.risk}</b>
                 </div>
-                <div style="background:#f8fafc; padding:10px; border-radius:8px; font-size:0.9rem; border: 1px dashed #cbd5e1">
-                    <i class="fa-solid fa-lightbulb" style="color:#f59e0b"></i> <b>Lời khuyên:</b> ${disease.advice}
+                <div style="background:#f8fafc; padding:10px; border-radius:8px; font-size:0.9rem; border: 1px dashed #cbd5e1; line-height: 1.5">
+                    <i class="fa-solid fa-hand-holding-medical" style="color:#3b82f6"></i> <b>Lời khuyên:</b> ${adviceHighlighted}
                 </div>
             </div>
         `;
         setTimeout(() => appendMessage("ai", cardHTML, true), index * 300);
     });
 
+    // Disclaimer tự động
     setTimeout(() => {
-        const disclaimer = `
-            <div style="font-size:0.8rem; color:#94a3b8; font-style:italic; margin-top:10px">
-                * Lưu ý: Kết quả này chỉ mang tính chất tham khảo học đường. Nếu triệu chứng nặng hơn, hãy liên hệ phòng y tế trường hoặc bác sĩ ngay lập tức.
+        appendMessage("ai", `
+            <div style="font-size:0.75rem; color:#94a3b8; font-style:italic; border-top: 1px solid #f1f5f9; pt: 8px">
+                * Lưu ý: Kết quả này chỉ mang tính tham khảo. Nếu thấy mệt nhiều, Đức hãy báo ngay cho thầy cô hoặc y tế trường nhé!
             </div>
-        `;
-        appendMessage("ai", disclaimer, true);
+        `, true);
     }, 700);
 }
 
-// 5. TIỆN ÍCH BỔ SUNG
-function quickSearch(symptom) {
-    if (inputField) {
-        inputField.value = symptom;
-        checkSymptoms();
-    }
-}
-
-function clearChat() {
-    if (chatBox && confirm("Bạn có chắc chắn muốn làm mới cuộc trò chuyện?")) {
-        chatBox.innerHTML = `
-            <div class="message-wrapper ai-wrapper">
-                <div class="message ai-message">Chào Đức! Hệ thống đã được làm mới. Mình có thể giúp gì cho sức khỏe của bạn lúc này?</div>
-            </div>
-        `;
-    }
-}
-
-function escapeHTML(str) {
-    const p = document.createElement("p");
-    p.textContent = str;
-    return p.innerHTML;
-}
-
-// 6. KHỞI TẠO SỰ KIỆN KHI TRANG SẴN SÀNG
+// 6. KHỞI TẠO SỰ KIỆN
 document.addEventListener("DOMContentLoaded", () => {
-    // Luôn khởi tạo giờ nếu có phần tử hiển thị (Sidebar)
+    // Cập nhật thời gian thực trên giao diện
     const timeDisplay = document.getElementById("realTime");
     if (timeDisplay) {
         const updateTime = () => { timeDisplay.innerText = new Date().toLocaleTimeString('vi-VN'); };
@@ -296,7 +288,7 @@ document.addEventListener("DOMContentLoaded", () => {
         updateTime();
     }
 
-    // Thêm CSS động cho hiệu ứng Typing
+    // CSS cho Typing dots (giữ nguyên của Đức vì đã đẹp)
     const style = document.createElement('style');
     style.innerHTML = `
         .typing-dots { display: flex; gap: 4px; padding: 5px 0; }
@@ -304,18 +296,29 @@ document.addEventListener("DOMContentLoaded", () => {
         .dot:nth-child(2) { animation-delay: 0.2s; }
         .dot:nth-child(3) { animation-delay: 0.4s; }
         @keyframes typing { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+        .disease-card { animation: slideIn 0.3s ease-out; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     `;
     document.head.appendChild(style);
 
-    // CHỈ GÁN SỰ KIỆN CHAT NẾU ĐANG Ở TRANG CHỦ (Kiểm tra sự tồn tại của ID)
+    // Gán sự kiện chat
     if (inputField && sendBtn && chatBox) {
         inputField.focus();
         sendBtn.addEventListener("click", checkSymptoms);
-        inputField.addEventListener("keyup", (event) => {
-            if (event.key === "Enter") checkSymptoms();
-        });
-        console.log("HealthScan Engine: Chat Mode Active.");
-    } else {
-        console.log("HealthScan Engine: Content Mode Active (Chat disabled for this page).");
+        inputField.addEventListener("keyup", (e) => { if (e.key === "Enter") checkSymptoms(); });
     }
 });
+
+// Các hàm phụ trợ tiện ích (Clear chat, Search nhanh)
+window.clearChat = () => {
+    if (confirm("Làm mới cuộc trò chuyện nhé Đức?")) {
+        chatBox.innerHTML = `<div class="message-wrapper ai-wrapper"><div class="message ai-message">Hệ thống đã sẵn sàng! Đức đang cảm thấy thế nào?</div></div>`;
+    }
+};
+
+window.quickSearch = (s) => {
+    if (inputField) {
+        inputField.value = s;
+        checkSymptoms();
+    }
+};
