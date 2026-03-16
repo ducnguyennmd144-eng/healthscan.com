@@ -4,63 +4,105 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hỗ trợ & Thông tin | HealthScan AI</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Plus+Jakarta+Sans:wght@800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #3b82f6;
-            --mit-red: #A31F34;
-            --bg: #f8fafc;
+            --primary-blue: #3b82f6;
+            --primary-dark: #2563eb;
+            --bg-light: #f8fafc;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --white: #ffffff;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
-        body { background-color: var(--bg); color: #1e293b; line-height: 1.6; }
+        body { background-color: var(--bg-light); color: var(--text-main); line-height: 1.6; }
 
-        /* --- NAVBAR ĐỒNG NHẤT --- */
+        /* --- NAVBAR ĐỒNG BỘ --- */
         .navbar {
-            background: white;
-            padding: 1rem 5%;
+            background: var(--white);
+            padding: 0 5%;
+            height: 75px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
             position: sticky; top: 0; z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.02);
         }
-        .logo { font-family: 'Plus Jakarta Sans'; font-size: 1.5rem; color: var(--mit-red); text-decoration: none; font-weight: 800; display: flex; align-items: center; gap: 10px; }
-        .nav-links a { text-decoration: none; color: #64748b; font-weight: 600; margin-left: 25px; transition: 0.3s; }
-        .nav-links a:hover, .nav-links a.active { color: var(--mit-red); }
+        .logo { 
+            font-family: 'Plus Jakarta Sans'; font-size: 1.5rem; color: var(--primary-blue); 
+            text-decoration: none; font-weight: 800; display: flex; align-items: center; gap: 10px; 
+        }
+        .logo span { color: var(--text-main); }
+
+        .nav-links a { 
+            text-decoration: none; color: var(--text-muted); font-weight: 600; 
+            margin-left: 25px; transition: 0.3s; font-size: 0.95rem;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--primary-blue); }
 
         /* --- CONTENT SECTION --- */
-        .container { max-width: 900px; margin: 50px auto; padding: 0 20px; }
+        .container { max-width: 900px; margin: 60px auto; padding: 0 20px; }
         
         .card {
-            background: white;
+            background: var(--white);
             border-radius: 24px;
             padding: 40px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.03);
+            margin-bottom: 35px;
             border: 1px solid #edf2f7;
+            transition: transform 0.3s ease;
         }
+        .card:hover { transform: translateY(-5px); }
 
-        h1 { font-family: 'Plus Jakarta Sans'; font-size: 2rem; color: #0f172a; margin-bottom: 20px; border-left: 5px solid var(--mit-red); padding-left: 15px; }
-        p { margin-bottom: 15px; color: #475569; }
+        h1 { 
+            font-family: 'Plus Jakarta Sans'; font-size: 2rem; color: var(--text-main); 
+            margin-bottom: 25px; display: flex; align-items: center; gap: 15px;
+        }
+        h1 i { color: var(--primary-blue); font-size: 1.6rem; }
+
+        p { margin-bottom: 20px; color: var(--text-muted); font-size: 1.05rem; }
 
         /* --- AUTHOR INFO --- */
-        .profile-box { display: flex; align-items: center; gap: 25px; margin-top: 30px; padding-top: 30px; border-top: 1px solid #eee; }
-        .avatar { width: 100px; height: 100px; background: var(--mit-red); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: 800; }
-        .info h3 { font-size: 1.4rem; color: #0f172a; }
-        .info p { margin: 0; font-weight: 600; color: var(--primary); }
+        .profile-box { 
+            display: flex; align-items: center; gap: 30px; 
+            margin-top: 20px; padding: 30px; 
+            background: #f1f5f9; border-radius: 20px;
+        }
+        .avatar { 
+            width: 110px; height: 110px; 
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-dark)); 
+            color: white; border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center; 
+            font-size: 3rem; font-weight: 800;
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+            border: 4px solid white;
+        }
+        .info h3 { font-size: 1.6rem; color: var(--text-main); font-family: 'Plus Jakarta Sans'; }
+        .info p { margin: 0; font-weight: 700; color: var(--primary-blue); font-size: 1rem; }
 
-        .badge { display: inline-block; background: #eff6ff; color: #1d4ed8; padding: 4px 12px; border-radius: 99px; font-size: 0.85rem; font-weight: 700; margin-top: 10px; }
+        .badge { 
+            display: inline-block; background: var(--white); color: var(--text-main); 
+            padding: 6px 16px; border-radius: 99px; font-size: 0.85rem; 
+            font-weight: 700; margin-top: 10px; border: 1px solid #e2e8f0;
+        }
 
-        footer { text-align: center; padding: 40px; color: #94a3b8; }
+        /* --- CONTACT LIST --- */
+        .contact-list { list-style: none; margin-top: 20px; }
+        .contact-list li { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; color: var(--text-muted); }
+        .contact-list i { color: var(--primary-blue); width: 20px; }
+
+        footer { text-align: center; padding: 50px; color: var(--text-muted); border-top: 1px solid #e2e8f0; background: var(--white); }
     </style>
 </head>
 <body>
 
     <nav class="navbar">
         <a href="index.html" class="logo">
-            <i class="fa-solid fa-hand-holding-medical"></i> HEALTHSCAN AI
+            <i class="fa-solid fa-hand-holding-medical"></i>
+            <span>HealthScan<b>AI</b></span>
         </a>
         <div class="nav-links">
             <a href="index.html">Chẩn đoán</a>
@@ -71,27 +113,43 @@
 
     <div class="container">
         <section class="card">
-            <h1>Về HealthScan AI</h1>
-            <p><strong>HealthScan AI</strong> là một dự án nghiên cứu khoa học kỹ thuật dành cho học sinh, với mục tiêu cung cấp giải pháp nhận diện triệu chứng bệnh nhanh chóng thông qua kho dữ liệu y khoa cơ bản.</p>
-            <p>Hệ thống sử dụng thuật toán phân tích cơ bản để đưa ra các dự đoán về tình trạng sức khỏe học đường thường gặp, kèm theo lời khuyên từ các nguồn uy tín.</p>
+            <h1><i class="fa-solid fa-circle-info"></i> Về dự án</h1>
+            <p><strong>HealthScan AI</strong> là hệ thống hỗ trợ tự kiểm tra sức khỏe thông minh, được thiết kế nhằm giúp học sinh chủ động theo dõi các triệu chứng bệnh lý học đường phổ biến.</p>
+            <p>Dự án kết hợp giữa lập trình giao diện hiện đại và cơ sở dữ liệu triệu chứng được chuẩn hóa, giúp rút ngắn khoảng cách giữa công nghệ và chăm sóc sức khỏe ban đầu.</p>
+            
+            <ul class="contact-list">
+                <li><i class="fa-solid fa-check-circle"></i> Phân tích hơn 15 loại bệnh lý học đường</li>
+                <li><i class="fa-solid fa-check-circle"></i> Đưa ra lời khuyên y khoa tức thời</li>
+                <li><i class="fa-solid fa-check-circle"></i> Giao diện thân thiện, dễ sử dụng</li>
+            </ul>
         </section>
 
         <section class="card">
-            <h1>Người phát triển</h1>
+            <h1><i class="fa-solid fa-code"></i> Người phát triển</h1>
             <div class="profile-box">
                 <div class="avatar">Đ</div>
                 <div class="info">
                     <h3>Nguyễn Minh Đức</h3>
-                    <p>Lớp 25-28 Tin</p>
-                    <div class="badge">THPT Chuyên Lương Thế Vinh</div>
+                    <p>Chuyên ngành: Computer Science (Học sinh)</p>
+                    <div class="badge">Lớp 25-28 Tin • THPT Chuyên Lương Thế Vinh</div>
                 </div>
             </div>
-            <p style="margin-top: 20px; font-style: italic;">"Sáng tạo công nghệ vì một cộng đồng học đường khỏe mạnh hơn."</p>
+            <div style="margin-top: 25px;">
+                <p style="font-style: italic; color: var(--text-main); font-weight: 500;">
+                    <i class="fa-solid fa-quote-left" style="color: #cbd5e1; margin-right: 10px;"></i>
+                    Sáng tạo công nghệ không chỉ là viết code, mà là giải quyết các vấn đề thực tiễn của cộng đồng.
+                </p>
+            </div>
+            
+            <div class="contact-list" style="display: grid; grid-template-columns: 1fr 1fr; margin-top: 20px;">
+                <li><i class="fa-solid fa-envelope"></i> duc.minh@school.edu.vn</li>
+                <li><i class="fa-solid fa-location-dot"></i> Biên Hòa, Đồng Nai</li>
+            </ul>
         </section>
     </div>
 
     <footer>
-        <p>&copy; 2026 HealthScan Pro - Phát triển bởi Minh Đức</p>
+        <p>&copy; 2026 HealthScan Pro - Project by Minh Duc</p>
     </footer>
 
 </body>
