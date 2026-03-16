@@ -1,6 +1,6 @@
 /**
  * HealthScan Pro - Core Logic Engine
- * Phiên bản: 3.0 (ProVip - Tinh chỉnh an toàn đa trang)
+ * Phiên bản: 3.1 (ProVip - Tối ưu đa trang & Loại bỏ Support)
  * Tác giả: Nguyễn Minh Đức
  */
 
@@ -29,14 +29,14 @@ const diseasesDatabase = [
     { name: "Đau vai gáy", group: "Cơ xương", keywords: ["đau vai", "mỏi gáy", "cứng cổ", "ngồi lâu"], risk: "Thấp", advice: "Tập các bài vận động cổ nhẹ nhàng và chỉnh lại tư thế ngồi." }
 ];
 
-// 2. KHỞI TẠO BIẾN GIAO DIỆN
+// 2. KHỞI TẠO BIẾN GIAO DIỆN (Sử dụng let để tránh lỗi nếu phần tử không tồn tại)
 const chatBox = document.getElementById("chatBox");
 const inputField = document.getElementById("symptomInput");
 const sendBtn = document.getElementById("sendBtn");
 
 // Hàm thêm tin nhắn vào khung chat
 function appendMessage(sender, content, isHTML = false) {
-    if (!chatBox) return; // Bảo vệ chống lỗi trang phụ
+    if (!chatBox) return; // CHẶN LỖI: Nếu không có chatBox (đang ở tips.html) thì thoát hàm
     const wrapper = document.createElement("div");
     wrapper.className = `message-wrapper ${sender}-wrapper`;
     
@@ -44,7 +44,7 @@ function appendMessage(sender, content, isHTML = false) {
     
     wrapper.innerHTML = `
         <div class="message ${sender}-message">
-            <div class="msg-content">${content}</div>
+            <div class="msg-content">${isHTML ? content : escapeHTML(content)}</div>
         </div>
         <span class="msg-time">${sender === 'ai' ? 'HealthScan AI' : 'Bạn'} • ${time}</span>
     `;
@@ -81,7 +81,7 @@ function checkSymptoms() {
     const text = inputField.value.trim();
     if (!text) return;
 
-    appendMessage("user", escapeHTML(text));
+    appendMessage("user", text);
     inputField.value = "";
     showTyping();
 
@@ -172,7 +172,15 @@ function escapeHTML(str) {
 
 // 6. KHỞI TẠO SỰ KIỆN KHI TRANG SẴN SÀNG
 document.addEventListener("DOMContentLoaded", () => {
-    // Thêm CSS động cho hiệu ứng Typing (Đã đổi màu Blue cho chuẩn VIP)
+    // Luôn khởi tạo giờ nếu có phần tử hiển thị (Sidebar)
+    const timeDisplay = document.getElementById("realTime");
+    if (timeDisplay) {
+        const updateTime = () => { timeDisplay.innerText = new Date().toLocaleTimeString('vi-VN'); };
+        setInterval(updateTime, 1000);
+        updateTime();
+    }
+
+    // Thêm CSS động cho hiệu ứng Typing
     const style = document.createElement('style');
     style.innerHTML = `
         .typing-dots { display: flex; gap: 4px; padding: 5px 0; }
@@ -183,18 +191,15 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
     document.head.appendChild(style);
 
-    // CHỈ GÁN SỰ KIỆN NẾU ĐANG Ở TRANG CHỦ (Tránh lỗi null trên trang Support/Tips)
+    // CHỈ GÁN SỰ KIỆN CHAT NẾU ĐANG Ở TRANG CHỦ (Kiểm tra sự tồn tại của ID)
     if (inputField && sendBtn && chatBox) {
         inputField.focus();
-        
-        // Nhấn nút gửi
         sendBtn.addEventListener("click", checkSymptoms);
-        
-        // Tinh chỉnh VIP: Bổ sung sự kiện nhấn phím Enter để gửi chat
         inputField.addEventListener("keyup", (event) => {
-            if (event.key === "Enter") {
-                checkSymptoms();
-            }
+            if (event.key === "Enter") checkSymptoms();
         });
+        console.log("HealthScan Engine: Chat Mode Active.");
+    } else {
+        console.log("HealthScan Engine: Content Mode Active (Chat disabled for this page).");
     }
 });
