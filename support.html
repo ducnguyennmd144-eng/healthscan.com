@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hỗ trợ & Thông tin | HealthScan AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Plus+Jakarta+Sans:wght@800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --mit-red: #A31F34;
+            --bg: #f8fafc;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--bg); color: #1e293b; line-height: 1.6; }
+
+        /* --- NAVBAR ĐỒNG NHẤT --- */
+        .navbar {
+            background: white;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #e2e8f0;
+            position: sticky; top: 0; z-index: 1000;
+        }
+        .logo { font-family: 'Plus Jakarta Sans'; font-size: 1.5rem; color: var(--mit-red); text-decoration: none; font-weight: 800; display: flex; align-items: center; gap: 10px; }
+        .nav-links a { text-decoration: none; color: #64748b; font-weight: 600; margin-left: 25px; transition: 0.3s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--mit-red); }
+
+        /* --- CONTENT SECTION --- */
+        .container { max-width: 900px; margin: 50px auto; padding: 0 20px; }
+        
+        .card {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            border: 1px solid #edf2f7;
+        }
+
+        h1 { font-family: 'Plus Jakarta Sans'; font-size: 2rem; color: #0f172a; margin-bottom: 20px; border-left: 5px solid var(--mit-red); padding-left: 15px; }
+        p { margin-bottom: 15px; color: #475569; }
+
+        /* --- AUTHOR INFO --- */
+        .profile-box { display: flex; align-items: center; gap: 25px; margin-top: 30px; padding-top: 30px; border-top: 1px solid #eee; }
+        .avatar { width: 100px; height: 100px; background: var(--mit-red); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: 800; }
+        .info h3 { font-size: 1.4rem; color: #0f172a; }
+        .info p { margin: 0; font-weight: 600; color: var(--primary); }
+
+        .badge { display: inline-block; background: #eff6ff; color: #1d4ed8; padding: 4px 12px; border-radius: 99px; font-size: 0.85rem; font-weight: 700; margin-top: 10px; }
+
+        footer { text-align: center; padding: 40px; color: #94a3b8; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="index.html" class="logo">
+            <i class="fa-solid fa-hand-holding-medical"></i> HEALTHSCAN AI
+        </a>
+        <div class="nav-links">
+            <a href="index.html">Chẩn đoán</a>
+            <a href="tips.html">Mẹo sức khỏe</a>
+            <a href="support.html" class="active">Hỗ trợ</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section class="card">
+            <h1>Về HealthScan AI</h1>
+            <p><strong>HealthScan AI</strong> là một dự án nghiên cứu khoa học kỹ thuật dành cho học sinh, với mục tiêu cung cấp giải pháp nhận diện triệu chứng bệnh nhanh chóng thông qua kho dữ liệu y khoa cơ bản.</p>
+            <p>Hệ thống sử dụng thuật toán phân tích cơ bản để đưa ra các dự đoán về tình trạng sức khỏe học đường thường gặp, kèm theo lời khuyên từ các nguồn uy tín.</p>
+        </section>
+
+        <section class="card">
+            <h1>Người phát triển</h1>
+            <div class="profile-box">
+                <div class="avatar">Đ</div>
+                <div class="info">
+                    <h3>Nguyễn Minh Đức</h3>
+                    <p>Lớp 25-28 Tin</p>
+                    <div class="badge">THPT Chuyên Lương Thế Vinh</div>
+                </div>
+            </div>
+            <p style="margin-top: 20px; font-style: italic;">"Sáng tạo công nghệ vì một cộng đồng học đường khỏe mạnh hơn."</p>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 HealthScan Pro - Phát triển bởi Minh Đức</p>
+    </footer>
+
+</body>
+</html>
