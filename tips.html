@@ -1,297 +1,393 @@
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cẩm nang Sức khỏe | HealthScan AI</title>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthScan AI | Trợ lý Sức khỏe Học đường</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Plus+Jakarta+Sans:wght@800&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-<style>
-:root {
+    <style>
+        :root {
             --primary: #3b82f6;
-            --mit-red: #A31F34; /* Giữ tông màu MIT chuyên nghiệp */
-            --bg: #f8fafc;
-            --primary-blue: #3b82f6;
-            --bg-light: #f8fafc;
-            --text-main: #1e293b;
+            --primary-dark: #2563eb;
+            --secondary: #10b981;
+            --bg-body: #f1f5f9;
+            --bg-card: #ffffff;
+            --text-main: #0f172a;
             --text-muted: #64748b;
-            --white: #ffffff;
-}
-
-* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
-        body { background-color: var(--bg); color: #1e293b; }
-        
-        body { 
-            background-color: var(--bg-light); 
-            color: var(--text-main);
-            line-height: 1.6;
+            --glass: rgba(255, 255, 255, 0.8);
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
 
-        /* --- NAVBAR (Đồng bộ trang chủ) --- */
-        /* --- NAVBAR ĐỒNG BỘ --- */
-.navbar {
-            background: white;
-            padding: 1rem 5%;
-            background: var(--white);
-            padding: 0 5%;
-            height: 75px;
-display: flex;
-justify-content: space-between;
-align-items: center;
-            border-bottom: 2px solid #e2e8f0;
-            position: sticky; top: 0; z-index: 100;
-            border-bottom: 1px solid #e2e8f0;
-            position: sticky; top: 0; z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
-}
-        .logo { font-family: 'Plus Jakarta Sans'; font-size: 1.5rem; color: var(--mit-red); text-decoration: none; font-weight: 800; }
-        .nav-links a { text-decoration: none; color: #64748b; font-weight: 600; margin-left: 20px; transition: 0.3s; }
-        .nav-links a.active { color: var(--mit-red); }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
 
-        /* --- HEADER --- */
-        .title-section { text-align: center; padding: 60px 20px; }
-        .title-section h1 { font-family: 'Plus Jakarta Sans'; font-size: 2.5rem; color: #0f172a; margin-bottom: 10px; }
-        .logo { 
-            font-family: 'Plus Jakarta Sans'; 
-            font-size: 1.5rem; 
-            color: var(--primary-blue); 
-            text-decoration: none; 
-            font-weight: 800; 
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; /* Cố định màn hình, chỉ cuộn box chat */
+        }
+
+        /* --- NAVBAR --- */
+        .navbar {
+            background: var(--bg-card);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e2e8f0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.5rem;
+            color: var(--primary);
             display: flex;
             align-items: center;
             gap: 10px;
         }
-        .logo span { color: var(--text-main); }
 
-        .nav-links a { 
-            text-decoration: none; 
-            color: var(--text-muted); 
-            font-weight: 600; 
-            margin-left: 25px; 
-            font-size: 0.95rem;
-            transition: 0.3s; 
+        .nav-links {
+            display: flex;
+            gap: 20px;
         }
-        .nav-links a:hover, .nav-links a.active { color: var(--primary-blue); }
 
-        /* --- GRID THEO BẢN VẼ --- */
-        /* --- HEADER SECTION --- */
-        .title-section { 
-            text-align: center; 
-            padding: 80px 20px 50px; 
-            background: linear-gradient(180deg, #ffffff 0%, rgba(248, 250, 252, 0) 100%);
-        }
-        .title-section h1 { 
-            font-family: 'Plus Jakarta Sans'; 
-            font-size: 2.8rem; 
-            color: var(--text-main); 
-            margin-bottom: 15px;
-            letter-spacing: -1px;
-        }
-        .title-section p { color: var(--text-muted); font-size: 1.1rem; }
-
-        /* --- TIPS GRID --- */
-.tips-grid {
-max-width: 1200px;
-            margin: 0 auto 60px;
-            margin: 0 auto 80px;
-display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-gap: 30px;
-padding: 0 20px;
-}
-
-        /* --- THẺ (CARD) ĐÚNG THEO PHÁC THẢO --- */
-        /* --- CARD STYLE VIP --- */
-.tip-card {
-            background: white;
-            border-radius: 20px;
-            overflow: hidden; /* Để ảnh không tràn ra ngoài bo góc */
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 500;
             transition: 0.3s;
-            border: 1px solid #e2e8f0;
-            background: var(--white);
-            border-radius: 24px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 1px solid #edf2f7;
-            position: relative;
-}
-
-        .tip-card:hover { transform: translateY(-10px); box-shadow: 0 20px 30px rgba(0,0,0,0.1); }
-        .tip-card:hover { 
-            transform: translateY(-12px); 
-            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.1); 
-            border-color: #bfdbfe;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
 
-        /* Phần Ảnh (Theo đúng vị trí bạn vẽ) */
-.tip-image {
-width: 100%;
-            height: 200px;
-            height: 220px;
-overflow: hidden;
-            background: #eee;
-            position: relative;
-}
-        
-        /* Badge nhãn dán trên ảnh */
-        .category-badge {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 5px 12px;
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary);
+        }
+
+        /* --- MAIN LAYOUT --- */
+        .app-container {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            max-width: 1400px;
+            margin: 20px auto;
+            width: 95%;
+            gap: 20px;
+            height: calc(100vh - 120px);
+        }
+
+        /* --- SIDEBAR (Left) --- */
+        .sidebar {
+            background: var(--bg-card);
             border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--primary-blue);
-            z-index: 10;
-            text-transform: uppercase;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
 
-.tip-image img {
-width: 100%;
-height: 100%;
-            object-fit: cover; /* Ảnh sẽ luôn lấp đầy khung */
-            transition: 0.5s;
-            object-fit: cover;
-            transition: 0.6s;
-}
-.tip-card:hover .tip-image img { transform: scale(1.1); }
-
-        /* Phần Nội dung */
-        .tip-content { padding: 25px; }
-        .tip-content h3 { font-size: 1.3rem; margin-bottom: 10px; color: #0f172a; }
-        .tip-content p { color: #64748b; font-size: 0.95rem; line-height: 1.6; }
-        .tip-content { padding: 30px; }
-        .tip-content h3 { 
-            font-size: 1.4rem; 
-            margin-bottom: 12px; 
-            color: var(--text-main);
-            font-family: 'Plus Jakarta Sans';
-        }
-        .tip-content p { 
-            color: var(--text-muted); 
-            font-size: 1rem; 
-            line-height: 1.7; 
+        .user-profile {
+            padding-bottom: 20px;
+            border-bottom: 1px solid #f1f5f9;
         }
 
-        footer { text-align: center; padding: 40px; color: #94a3b8; border-top: 1px solid #e2e8f0; }
-        footer { 
-            text-align: center; 
-            padding: 50px; 
-            color: var(--text-muted); 
-            background: var(--white);
-            border-top: 1px solid #e2e8f0; 
+        .user-profile h2 { font-size: 1.1rem; margin-bottom: 5px; }
+        .user-profile p { font-size: 0.85rem; color: var(--text-muted); }
+
+        .quick-actions h3 {
             font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 15px;
         }
 
-        @media (max-width: 768px) {
-            .title-section h1 { font-size: 2rem; }
-            .tips-grid { grid-template-columns: 1fr; }
+        .tag-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
         }
-</style>
+
+        .tag-btn {
+            background: #eff6ff;
+            border: 1px solid #dbeafe;
+            color: var(--primary-dark);
+            padding: 8px 15px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: 0.2s;
+            width: 100%;
+            text-align: left;
+        }
+
+        .tag-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        /* --- CHAT AREA (Right) --- */
+        .chat-main {
+            background: var(--bg-card);
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .chat-header {
+            padding: 20px 25px;
+            border-bottom: 1px solid #f1f5f9;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .status-online {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            color: var(--secondary);
+            font-weight: 600;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--secondary);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        /* KHUNG CHAT QUAN TRỌNG - SỬA LỖI CUỘN */
+        .chat-box {
+            flex: 1;
+            padding: 25px;
+            overflow-y: auto;
+            background-color: #f8fafc;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            scroll-behavior: smooth;
+        }
+
+        .chat-box::-webkit-scrollbar { width: 6px; }
+        .chat-box::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+
+        /* BONG BÓNG CHAT */
+        .message-wrapper {
+            display: flex;
+            flex-direction: column;
+            max-width: 80%;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .ai-wrapper { align-self: flex-start; }
+        .user-wrapper { align-self: flex-end; }
+
+        .message {
+            padding: 15px 20px;
+            border-radius: 18px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        .ai-message {
+            background: white;
+            color: var(--text-main);
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+
+        .user-message {
+            background: var(--primary);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .msg-time {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
+
+        /* INPUT AREA */
+        .input-container {
+            padding: 20px 25px;
+            background: white;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .input-wrapper {
+            background: #f1f5f9;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            padding: 5px 15px;
+            transition: 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .input-wrapper:focus-within {
+            background: white;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+        }
+
+        .input-wrapper input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 12px;
+            outline: none;
+            font-size: 1rem;
+        }
+
+        .send-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .send-btn:hover { background: var(--primary-dark); transform: scale(1.05); }
+
+        /* DISEASE CARD TRONG KẾT QUẢ */
+        .disease-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 10px;
+            border-left: 5px solid var(--primary);
+        }
+
+        /* KEYFRAMES */
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .app-container { grid-template-columns: 1fr; }
+            .sidebar { display: none; }
+        }
+    </style>
 </head>
 <body>
 
-<nav class="navbar">
-        <a href="index.html" class="logo">HEALTHSCAN AI</a>
-        <a href="index.html" class="logo">
+    <nav class="navbar">
+        <div class="logo">
             <i class="fa-solid fa-hand-holding-medical"></i>
-            <span>HealthScan<b>AI</b></span>
-        </a>
-<div class="nav-links">
-            <a href="index.html">Trang chủ</a>
-            <a href="index.html">Chẩn đoán</a>
-<a href="tips.html" class="active">Mẹo sức khỏe</a>
-            <a href="support.html">Hỗ trợ</a>
-</div>
-</nav>
+            <span>HealthScan<b style="color:var(--text-main)">AI</b></span>
+        </div>
+        <div class="nav-links">
+            <a href="index.html" class="active"><i class="fa-solid fa-comment-medical"></i> Chẩn đoán</a>
+            <a href="tips.html"><i class="fa-solid fa-lightbulb"></i> Mẹo sức khỏe</a>
+            <a href="#"><i class="fa-solid fa-circle-info"></i> Hỗ trợ</a>
+        </div>
+    </nav>
 
-<div class="title-section">
-<h1>Cẩm nang sức khỏe</h1>
-        <p>Kiến thức y khoa bổ ích dành cho học sinh</p>
-        <p>Kiến thức y khoa bổ ích dành riêng cho cộng đồng học sinh</p>
-</div>
+    <main class="app-container">
+        
+        <aside class="sidebar">
+            <div class="user-profile">
+                <p>Xin chào 👋</p>
+                <h2>Nguyễn Minh Đức</h2>
+                <div id="realTime" style="font-weight: 600; color: var(--primary); margin-top: 10px;">00:00:00</div>
+            </div>
 
-<main class="tips-grid">
-<article class="tip-card">
-            <div class="category-badge">Dinh dưỡng</div>
-<div class="tip-image">
-<img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=600" alt="Nước">
-</div>
-<div class="tip-content">
-<h3>Thói quen uống nước</h3>
-                <p>Nước giúp thanh lọc cơ thể và duy trì sự tỉnh táo tối đa trong các tiết học căng thẳng.</p>
-                <p>Nước giúp thanh lọc cơ thể và duy trì sự tỉnh táo tối đa trong các tiết học căng thẳng. Đừng đợi đến khi khát mới uống nhé!</p>
-</div>
-</article>
+            <div class="quick-actions">
+                <h3>Triệu chứng phổ biến</h3>
+                <div class="tag-cloud">
+                    <button class="tag-btn" onclick="quickSearch('sốt cao')">🌡️ Sốt cao, mệt mỏi</button>
+                    <button class="tag-btn" onclick="quickSearch('đau họng')">👄 Đau họng, khó nuốt</button>
+                    <button class="tag-btn" onclick="quickSearch('mỏi mắt')">👀 Mỏi mắt do nhìn máy tính</button>
+                    <button class="tag-btn" onclick="quickSearch('đau bụng')">🤢 Đau bụng, buồn nôn</button>
+                    <button class="tag-btn" onclick="quickSearch('áp lực')">🧠 Căng thẳng, stress học tập</button>
+                </div>
+            </div>
 
-<article class="tip-card">
-            <div class="category-badge">Sinh hoạt</div>
-<div class="tip-image">
-<img src="https://images.unsplash.com/photo-1511295742364-911917175477?q=80&w=600" alt="Ngủ">
-</div>
-<div class="tip-content">
-<h3>Giấc ngủ & Trí nhớ</h3>
-                <p>Ngủ đủ giấc giúp não bộ sắp xếp lại kiến thức bạn đã học được trong ngày một cách logic.</p>
-                <p>Một giấc ngủ sâu từ 7-8 tiếng giúp não bộ củng cố kiến thức và tái tạo năng lượng cho ngày học tiếp theo.</p>
-</div>
-</article>
+            <div style="margin-top: auto; padding: 15px; background: #f8fafc; border-radius: 12px; font-size: 0.8rem; color: var(--text-muted);">
+                <i class="fa-solid fa-shield-halved"></i> Dữ liệu của bạn được bảo mật và chỉ dùng cho mục đích tham khảo giáo dục.
+            </div>
+        </aside>
 
-<article class="tip-card">
-            <div class="category-badge">Dinh dưỡng</div>
-<div class="tip-image">
-<img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=600" alt="Ăn uống">
-</div>
-<div class="tip-content">
-<h3>Chế độ ăn xanh</h3>
-                <p>Rau xanh cung cấp chất xơ và vitamin giúp hệ tiêu hóa khỏe mạnh, tránh mệt mỏi sau khi ăn.</p>
-                <p>Tăng cường rau quả trong bữa ăn giúp cung cấp chất xơ và vitamin, hỗ trợ hệ miễn dịch luôn ở trạng thái tốt nhất.</p>
-</div>
-</article>
+        <section class="chat-main">
+            <div class="chat-header">
+                <div class="status-online">
+                    <div class="status-dot"></div>
+                    Trợ lý HealthScan AI đang trực tuyến
+                </div>
+                <button onclick="clearChat()" style="background:none; border:none; color:var(--text-muted); cursor:pointer;">
+                    <i class="fa-solid fa-rotate-right"></i> Làm mới
+                </button>
+            </div>
 
-<article class="tip-card">
-            <div class="category-badge">Tâm lý</div>
-<div class="tip-image">
-<img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=600" alt="Vận động">
-</div>
-<div class="tip-content">
-<h3>Vận động thể chất</h3>
-                <p>Chỉ cần 15-30 phút vận động nhẹ mỗi ngày sẽ giúp giải tỏa Stress hiệu quả hơn bất kỳ thuốc nào.</p>
-                <p>Đi bộ nhẹ nhàng hoặc chơi một môn thể thao yêu thích sau giờ học là cách tốt nhất để "xả" Stress mùa thi cử.</p>
-</div>
-</article>
+            <div id="chatBox" class="chat-box">
+                <div class="message-wrapper ai-wrapper">
+                    <div class="message ai-message">
+                        Chào Đức! Mình là trợ lý sức khỏe thông minh. Hãy cho mình biết bạn đang cảm thấy thế nào hoặc nhập triệu chứng bạn gặp phải nhé? 🩺
+                    </div>
+                    <span class="msg-time">Hệ thống</span>
+                </div>
+            </div>
 
-<article class="tip-card">
-            <div class="category-badge">Nhãn khoa</div>
-<div class="tip-image">
-<img src="https://images.unsplash.com/photo-1547082299-de196ea013d6?q=80&w=600" alt="Mắt">
-</div>
-<div class="tip-content">
-<h3>Bảo vệ đôi mắt</h3>
-                <p>Quy tắc 20-20-20 giúp giảm mỏi mắt khi phải nhìn màn hình máy tính và tài liệu quá lâu.</p>
-                <p>Hãy nhớ quy tắc 20-20-20: Mỗi 20 phút làm việc với máy tính, hãy nhìn xa 20 feet (6m) trong 20 giây.</p>
-</div>
-</article>
+            <div class="input-container">
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-magnifying-glass" style="color:var(--text-muted)"></i>
+                    <input type="text" id="symptomInput" placeholder="Mô tả cảm giác của bạn (vd: Tôi bị đau đầu và sốt)...">
+                    <button class="send-btn" id="sendBtn">
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
 
-<article class="tip-card">
-            <div class="category-badge">Phòng dịch</div>
-<div class="tip-image">
-<img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=600" alt="Sạch sẽ">
-</div>
-<div class="tip-content">
-<h3>Vệ sinh đúng cách</h3>
-                <p>Giữ bàn tay sạch sẽ là chìa khóa vàng để bảo vệ bạn khỏi các dịch bệnh lây nhiễm tại trường học.</p>
-                <p>Rửa tay thường xuyên với xà phòng là biện pháp đơn giản nhưng hiệu quả nhất để phòng tránh các bệnh truyền nhiễm.</p>
-</div>
-</article>
-</main>
+    </main>
 
-<footer>
-        <p>&copy; 2026 HealthScan Pro - Thiết kế theo bản phác thảo của Nguyễn Minh Đức</p>
-        <p>&copy; 2026 HealthScan Pro - Phát triển bởi Nguyễn Minh Đức</p>
-</footer>
+    <footer style="text-align: center; font-size: 0.8rem; color: var(--text-muted); padding-bottom: 10px;">
+        &copy; 2026 HealthScan Pro - Phát triển bởi Minh Đức | Dự án Khoa học kỹ thuật
+    </footer>
 
+    <script src="script.js"></script>
+    <script>
+        // Cập nhật giờ thời gian thực
+        function updateTime() {
+            const now = new Date();
+            document.getElementById("realTime").innerText = now.toLocaleTimeString('vi-VN');
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+
+        // Xử lý nút Enter
+        document.getElementById("symptomInput").addEventListener("keydown", function(e) {
+            if(e.key === "Enter") {
+                checkSymptoms();
+            }
+        });
+    </script>
 </body>
+</html>
