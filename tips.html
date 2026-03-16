@@ -10,17 +10,17 @@
 
     <style>
         :root {
-            --primary: #3b82f6;
+            --primary: #3b82f6; /* Màu xanh index */
             --primary-hover: #2563eb;
             --bg: #f8fafc;
-            --text-main: #1e293b;
+            --text-main: #0f172a; /* Đổi thành xanh đen đậm cho giống index */
             --text-muted: #64748b;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
         body { background-color: var(--bg); color: var(--text-main); line-height: 1.6; }
 
-        /* --- NAVBAR --- */
+        /* --- NAVBAR ĐÃ TINH CHỈNH ĐỂ GIỐNG INDEX 100% --- */
         .navbar {
             background: white;
             padding: 0.8rem 5%;
@@ -40,17 +40,22 @@
 
         .logo-icon {
             color: var(--primary);
-            font-size: 1.5rem;
+            font-size: 1.6rem; /* Tăng nhẹ kích cỡ icon */
         }
 
         .logo-text {
-            font-family: 'Plus Jakarta Sans';
-            font-size: 1.4rem;
-            color: #1e293b;
-            font-weight: 800;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.5rem; /* Tăng size font cho bằng index */
+            color: #0f172a; /* Màu chữ tối đậm chuẩn */
+            font-weight: 800; /* Ép độ đậm 800 */
+            letter-spacing: -0.5px;
         }
 
-        .logo-text span { color: var(--primary); }
+        /* Chữ AI màu xanh rực rỡ */
+        .logo-text span { 
+            color: var(--primary); 
+            font-weight: 800;
+        }
 
         .nav-links {
             display: flex;
@@ -60,8 +65,8 @@
         .nav-links a {
             text-decoration: none;
             color: var(--text-muted);
-            font-weight: 600;
-            font-size: 0.95rem;
+            font-weight: 700; /* Làm chữ menu đậm hơn */
+            font-size: 1rem;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -81,9 +86,16 @@
 
         .title-section h1 {
             font-family: 'Plus Jakarta Sans';
-            font-size: 2.5rem;
+            font-size: 2.8rem; /* Tăng size tiêu đề cho nổi bật */
+            font-weight: 800;
             color: #0f172a;
             margin-bottom: 12px;
+            letter-spacing: -1px;
+        }
+
+        .title-section p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
         }
 
         /* --- GRID HỆ THỐNG THẺ --- */
@@ -92,7 +104,7 @@
             margin: 0 auto 80px;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 25px;
+            gap: 30px; /* Tăng khoảng cách thẻ cho thoáng */
             padding: 0 20px;
         }
 
@@ -101,21 +113,34 @@
             border-radius: 24px;
             overflow: hidden;
             box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-            transition: 0.4s;
+            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             border: 1px solid #f1f5f9;
         }
 
         .tip-card:hover {
-            transform: translateY(-8px);
+            transform: translateY(-10px);
             box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+            border-color: #dbeafe;
         }
 
         .tip-image { width: 100%; height: 220px; overflow: hidden; background: #f1f5f9; }
         .tip-image img { width: 100%; height: 100%; object-fit: cover; transition: 0.6s; }
-        .tip-card:hover .tip-image img { transform: scale(1.08); }
+        .tip-card:hover .tip-image img { transform: scale(1.1); }
 
         .tip-content { padding: 24px; }
-        .tip-content h3 { font-family: 'Plus Jakarta Sans'; margin-bottom: 12px; }
+        .tip-content h3 { 
+            font-family: 'Plus Jakarta Sans'; 
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin-bottom: 12px; 
+            color: #0f172a;
+        }
+
+        .tip-content p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
 
         footer {
             text-align: center;
@@ -128,6 +153,7 @@
 
         @media (max-width: 768px) {
             .nav-links span { display: none; }
+            .title-section h1 { font-size: 2rem; }
         }
     </style>
 </head>
@@ -140,14 +166,20 @@
         </a>
         
         <div class="nav-links">
-            <a href="index.html"><i class="fa-solid fa-comment-medical"></i> <span>Chẩn đoán</span></a>
-            <a href="tips.html" class="active"><i class="fa-solid fa-lightbulb"></i> <span>Mẹo sức khỏe</span></a>
-            </div>
+            <a href="index.html">
+                <i class="fa-solid fa-comment-medical"></i> 
+                <span>Chẩn đoán</span>
+            </a>
+            <a href="tips.html" class="active">
+                <i class="fa-solid fa-lightbulb"></i> 
+                <span>Mẹo sức khỏe</span>
+            </a>
+        </div>
     </nav>
 
     <div class="title-section">
         <h1>Cẩm nang sức khỏe</h1>
-        <p>Kiến thức y khoa bổ ích giúp bạn học tập tốt hơn mỗi ngày</p>
+        <p>Kiến thức y khoa bổ ích giúp bạn học tập và sinh hoạt tốt hơn mỗi ngày</p>
     </div>
 
     <main class="tips-grid">
@@ -157,7 +189,7 @@
             </div>
             <div class="tip-content">
                 <h3>Thói quen uống nước</h3>
-                <p>Nước giúp thanh lọc cơ thể và duy trì sự tỉnh táo tối đa trong các tiết học căng thẳng.</p>
+                <p>Nước giúp thanh lọc cơ thể và duy trì sự tỉnh táo tối đa trong các tiết học căng thẳng. Hãy uống đủ 2 lít mỗi ngày.</p>
             </div>
         </article>
 
@@ -167,7 +199,7 @@
             </div>
             <div class="tip-content">
                 <h3>Giấc ngủ & Trí nhớ</h3>
-                <p>Ngủ đủ giấc giúp não bộ sắp xếp lại kiến thức bạn đã học được trong ngày một cách logic.</p>
+                <p>Ngủ đủ giấc giúp não bộ sắp xếp lại kiến thức bạn đã học được trong ngày một cách logic và bền vững hơn.</p>
             </div>
         </article>
 
@@ -177,7 +209,7 @@
             </div>
             <div class="tip-content">
                 <h3>Chế độ ăn xanh</h3>
-                <p>Rau xanh cung cấp chất xơ và vitamin giúp hệ tiêu hóa khỏe mạnh, tránh mệt mỏi sau khi ăn.</p>
+                <p>Rau xanh cung cấp chất xơ và vitamin thiết yếu giúp hệ tiêu hóa khỏe mạnh, tránh cảm giác mệt mỏi sau khi ăn.</p>
             </div>
         </article>
     </main>
@@ -188,7 +220,6 @@
     </footer>
 
     <script>
-        // Cập nhật thời gian thực
         function updateTime() {
             const now = new Date();
             const element = document.getElementById("realTime");
