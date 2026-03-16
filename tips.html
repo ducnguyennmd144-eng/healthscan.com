@@ -1,34 +1,307 @@
-<!-- Health Tips -->
-<div class="health-tips">
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cẩm nang Sức khỏe | HealthScan AI</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <h3>💡 Tips sức khỏe hôm nay</h3>
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --secondary: #10b981;
+            --accent: #f59e0b;
+            --bg-body: #f8fafc;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
 
-    <div class="tips-grid">
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
 
-        <div class="tip-card">
-            🥤 Uống ít nhất 2 lít nước mỗi ngày để cơ thể hoạt động tốt.
+        body { background-color: var(--bg-body); color: var(--text-main); line-height: 1.6; }
+
+        /* --- NAVBAR --- */
+        .navbar {
+            background: white;
+            padding: 1rem 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e2e8f0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.5rem;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-left: 25px;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover, .nav-links a.active { color: var(--primary); }
+
+        /* --- HERO SECTION --- */
+        .hero-tips {
+            background: linear-gradient(135deg, #1e293b 0%, #3b82f6 100%);
+            color: white;
+            padding: 80px 10%;
+            text-align: center;
+        }
+
+        .hero-tips h1 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .hero-tips p { opacity: 0.9; font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+
+        /* --- TIPS GRID --- */
+        .container {
+            max-width: 1200px;
+            margin: -50px auto 50px;
+            padding: 0 20px;
+        }
+
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        /* CARD STYLE */
+        .tip-card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tip-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+        }
+
+        .tip-image {
+            position: relative;
+            height: 220px;
+            overflow: hidden;
+        }
+
+        .tip-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.5s;
+        }
+
+        .tip-card:hover .tip-image img { transform: scale(1.1); }
+
+        .category-badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: var(--primary);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .tip-content { padding: 25px; flex-grow: 1; display: flex; flex-direction: column; }
+        
+        .tip-content h3 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            margin-bottom: 12px;
+            font-size: 1.25rem;
+            color: #1e293b;
+        }
+
+        .tip-content p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+        }
+
+        .tip-footer {
+            margin-top: auto;
+            padding-top: 15px;
+            border-top: 1px solid #f1f5f9;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .read-more {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 40px;
+            background: white;
+            border-top: 1px solid #e2e8f0;
+            margin-top: 50px;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .hero-tips h1 { font-size: 1.8rem; }
+            .tips-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="index.html" class="logo">
+            <i class="fa-solid fa-hand-holding-medical"></i>
+            <span>HealthScan<b style="color:var(--text-main)">AI</b></span>
+        </a>
+        <div class="nav-links">
+            <a href="index.html">Chẩn đoán</a>
+            <a href="tips.html" class="active">Mẹo sức khỏe</a>
         </div>
+    </nav>
 
-        <div class="tip-card">
-            😴 Ngủ đủ 7-8 tiếng mỗi ngày giúp tăng cường miễn dịch.
+    <header class="hero-tips">
+        <h1>Cẩm nang sống khỏe mỗi ngày</h1>
+        <p>Những bí quyết từ chuyên gia giúp bạn duy trì phong độ tốt nhất trong học tập và cuộc sống.</p>
+    </header>
+
+    <main class="container">
+        <div class="tips-grid">
+            
+            <article class="tip-card">
+                <div class="tip-image">
+                    <span class="category-badge" style="background: #8b5cf6;">Tâm lý</span>
+                    <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=600" alt="Meditation">
+                </div>
+                <div class="tip-content">
+                    <h3>Xua tan áp lực thi cử</h3>
+                    <p>Học cách hít thở theo nhịp 4-7-8 giúp làm dịu hệ thần kinh ngay lập tức khi bạn cảm thấy quá tải với bài vở.</p>
+                    <div class="tip-footer">
+                        <span style="font-size: 0.8rem; color: #94a3b8;"><i class="fa-regular fa-clock"></i> 3 phút đọc</span>
+                        <a href="#" class="read-more">Chi tiết <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="tip-card">
+                <div class="tip-image">
+                    <span class="category-badge" style="background: #10b981;">Dinh dưỡng</span>
+                    <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=600" alt="Hydration">
+                </div>
+                <div class="tip-content">
+                    <h3>Sức mạnh của nước lọc</h3>
+                    <p>Uống đủ nước không chỉ giúp đẹp da mà còn tăng khả năng tập trung của não bộ lên thêm 14% trong giờ học.</p>
+                    <div class="tip-footer">
+                        <span style="font-size: 0.8rem; color: #94a3b8;"><i class="fa-regular fa-clock"></i> 2 phút đọc</span>
+                        <a href="#" class="read-more">Chi tiết <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="tip-card">
+                <div class="tip-image">
+                    <span class="category-badge" style="background: #f59e0b;">Vận động</span>
+                    <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=600" alt="Exercise">
+                </div>
+                <div class="tip-content">
+                    <h3>Bài tập 5 phút tại chỗ</h3>
+                    <p>Dành 5 phút giữa các tiết học để xoay vai và cổ giúp ngăn ngừa chứng đau vai gáy mãn tính ở học sinh.</p>
+                    <div class="tip-footer">
+                        <span style="font-size: 0.8rem; color: #94a3b8;"><i class="fa-regular fa-clock"></i> 4 phút đọc</span>
+                        <a href="#" class="read-more">Chi tiết <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="tip-card">
+                <div class="tip-image">
+                    <span class="category-badge" style="background: #3b82f6;">Giấc ngủ</span>
+                    <img src="https://images.unsplash.com/photo-1511295742364-911917175477?auto=format&fit=crop&q=80&w=600" alt="Sleep">
+                </div>
+                <div class="tip-content">
+                    <h3>Ngủ ngon để nhớ lâu</h3>
+                    <p>Trong khi ngủ, não bộ sẽ sắp xếp lại thông tin đã học. Thiếu ngủ sẽ khiến kiến thức "rơi rụng" nhanh chóng.</p>
+                    <div class="tip-footer">
+                        <span style="font-size: 0.8rem; color: #94a3b8;"><i class="fa-regular fa-clock"></i> 5 phút đọc</span>
+                        <a href="#" class="read-more">Chi tiết <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="tip-card">
+                <div class="tip-image">
+                    <span class="category-badge" style="background: #ef4444;">Kỹ năng số</span>
+                    <img src="https://images.unsplash.com/photo-1547082299-de196ea013d6?auto=format&fit=crop&q=80&w=600" alt="Digital Detox">
+                </div>
+                <div class="tip-content">
+                    <h3>Quy tắc 20-20-20 cho mắt</h3>
+                    <p>Cứ mỗi 20 phút nhìn màn hình, hãy nhìn ra xa 20 feet (6m) trong 20 giây để bảo vệ thị lực khỏi cận thị.</p>
+                    <div class="tip-footer">
+                        <span style="font-size: 0.8rem; color: #94a3b8;"><i class="fa-regular fa-clock"></i> 3 phút đọc</span>
+                        <a href="#" class="read-more">Chi tiết <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="tip-card">
+                <div class="tip-image">
+                    <span class="category-badge" style="background: #06b6d4;">Vệ sinh</span>
+                    <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80&w=600" alt="Hygiene">
+                </div>
+                <div class="tip-content">
+                    <h3>Phòng bệnh hơn chữa bệnh</h3>
+                    <p>Sử dụng nước rửa tay khô sau khi tiếp xúc với các bề mặt công cộng ở trường để tránh lây nhiễm cúm mùa.</p>
+                    <div class="tip-footer">
+                        <span style="font-size: 0.8rem; color: #94a3b8;"><i class="fa-regular fa-clock"></i> 2 phút đọc</span>
+                        <a href="#" class="read-more">Chi tiết <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </article>
+
         </div>
+    </main>
 
-        <div class="tip-card">
-            🥗 Ăn nhiều rau xanh và trái cây để bổ sung vitamin.
+    <footer>
+        <div class="logo" style="justify-content: center; margin-bottom: 15px;">
+             <i class="fa-solid fa-hand-holding-medical"></i> HealthScan AI
         </div>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">Dự án học đường mang tính chất tham khảo & giáo dục.</p>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">&copy; 2026 Thực hiện bởi Nguyễn Minh Đức</p>
+    </footer>
 
-        <div class="tip-card">
-            🚶‍♂️ Tập thể dục 30 phút mỗi ngày giúp tim khỏe hơn.
-        </div>
-
-        <div class="tip-card">
-            📵 Tránh dùng điện thoại trước khi ngủ để ngủ sâu hơn.
-        </div>
-
-        <div class="tip-card">
-            🧼 Rửa tay thường xuyên để phòng tránh bệnh truyền nhiễm.
-        </div>
-
-    </div>
-
-</div>
+</body>
+</html>
