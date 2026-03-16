@@ -1,259 +1,297 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mẹo Sức Khỏe | HealthScan AI</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cẩm nang Sức khỏe | HealthScan AI</title>
 
-    <style>
-        :root {
-            --primary: #3b82f6; /* Màu xanh chủ đạo từ trang Main */
-            --primary-hover: #2563eb;
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Plus+Jakarta+Sans:wght@800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+:root {
+            --primary: #3b82f6;
+            --mit-red: #A31F34; /* Giữ tông màu MIT chuyên nghiệp */
             --bg: #f8fafc;
+            --primary-blue: #3b82f6;
+            --bg-light: #f8fafc;
             --text-main: #1e293b;
             --text-muted: #64748b;
-        }
+            --white: #ffffff;
+}
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
-        body { background-color: var(--bg); color: var(--text-main); }
-
-        /* --- NAVBAR (Đồng bộ hoàn toàn với trang chủ) --- */
-        .navbar {
-            background: white;
-            padding: 0.8rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            position: sticky; top: 0; z-index: 1000;
-        }
-
-        .logo-container {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            gap: 10px;
-        }
-
-        .logo-icon {
-            color: var(--primary);
-            font-size: 1.5rem;
-        }
-
-        .logo-text {
-            font-family: 'Plus Jakarta Sans';
-            font-size: 1.4rem;
-            color: #1e293b;
-            font-weight: 800;
-        }
-
-        .logo-text span { color: var(--primary); }
-
-        .nav-links {
-            display: flex;
-            gap: 25px;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-muted);
-            font-weight: 600;
-            font-size: 0.95rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: 0.3s;
-        }
-
-        .nav-links a i { font-size: 1rem; }
-
-        .nav-links a:hover, .nav-links a.active {
-            color: var(--primary);
-        }
-
-        /* --- HEADER --- */
-        .title-section {
-            text-align: center;
-            padding: 50px 20px;
-            background: linear-gradient(to bottom, #ffffff, var(--bg));
-        }
-
-        .title-section h1 {
-            font-family: 'Plus Jakarta Sans';
-            font-size: 2.5rem;
-            color: #0f172a;
-            margin-bottom: 12px;
-            letter-spacing: -1px;
-        }
-
-        .title-section p {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-        }
-
-        /* --- GRID HỆ THỐNG THẺ --- */
-        .tips-grid {
-            max-width: 1200px;
-            margin: 0 auto 80px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 25px;
-            padding: 0 20px;
-        }
-
-        .tip-card {
-            background: white;
-            border-radius: 24px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid #f1f5f9;
-        }
-
-        .tip-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
-            border-color: #dbeafe;
-        }
-
-        .tip-image {
-            width: 100%;
-            height: 220px;
-            overflow: hidden;
-            background: #f1f5f9;
-        }
-
-        .tip-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: 0.6s;
-        }
-
-        .tip-card:hover .tip-image img {
-            transform: scale(1.08);
-        }
-
-        .tip-content {
-            padding: 24px;
-        }
-
-        .tip-content h3 {
-            font-family: 'Plus Jakarta Sans';
-            font-size: 1.25rem;
-            margin-bottom: 12px;
-            color: #0f172a;
-        }
-
-        .tip-content p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--bg); color: #1e293b; }
+        
+        body { 
+            background-color: var(--bg-light); 
+            color: var(--text-main);
             line-height: 1.6;
         }
 
-        footer {
-            text-align: center;
-            padding: 40px;
-            color: #94a3b8;
-            font-size: 0.9rem;
-            border-top: 1px solid #e2e8f0;
+        /* --- NAVBAR (Đồng bộ trang chủ) --- */
+        /* --- NAVBAR ĐỒNG BỘ --- */
+.navbar {
             background: white;
+            padding: 1rem 5%;
+            background: var(--white);
+            padding: 0 5%;
+            height: 75px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+            border-bottom: 2px solid #e2e8f0;
+            position: sticky; top: 0; z-index: 100;
+            border-bottom: 1px solid #e2e8f0;
+            position: sticky; top: 0; z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+}
+        .logo { font-family: 'Plus Jakarta Sans'; font-size: 1.5rem; color: var(--mit-red); text-decoration: none; font-weight: 800; }
+        .nav-links a { text-decoration: none; color: #64748b; font-weight: 600; margin-left: 20px; transition: 0.3s; }
+        .nav-links a.active { color: var(--mit-red); }
+
+        /* --- HEADER --- */
+        .title-section { text-align: center; padding: 60px 20px; }
+        .title-section h1 { font-family: 'Plus Jakarta Sans'; font-size: 2.5rem; color: #0f172a; margin-bottom: 10px; }
+        .logo { 
+            font-family: 'Plus Jakarta Sans'; 
+            font-size: 1.5rem; 
+            color: var(--primary-blue); 
+            text-decoration: none; 
+            font-weight: 800; 
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo span { color: var(--text-main); }
+
+        .nav-links a { 
+            text-decoration: none; 
+            color: var(--text-muted); 
+            font-weight: 600; 
+            margin-left: 25px; 
+            font-size: 0.95rem;
+            transition: 0.3s; 
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--primary-blue); }
+
+        /* --- GRID THEO BẢN VẼ --- */
+        /* --- HEADER SECTION --- */
+        .title-section { 
+            text-align: center; 
+            padding: 80px 20px 50px; 
+            background: linear-gradient(180deg, #ffffff 0%, rgba(248, 250, 252, 0) 100%);
+        }
+        .title-section h1 { 
+            font-family: 'Plus Jakarta Sans'; 
+            font-size: 2.8rem; 
+            color: var(--text-main); 
+            margin-bottom: 15px;
+            letter-spacing: -1px;
+        }
+        .title-section p { color: var(--text-muted); font-size: 1.1rem; }
+
+        /* --- TIPS GRID --- */
+.tips-grid {
+max-width: 1200px;
+            margin: 0 auto 60px;
+            margin: 0 auto 80px;
+display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+gap: 30px;
+padding: 0 20px;
+}
+
+        /* --- THẺ (CARD) ĐÚNG THEO PHÁC THẢO --- */
+        /* --- CARD STYLE VIP --- */
+.tip-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden; /* Để ảnh không tràn ra ngoài bo góc */
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            transition: 0.3s;
+            border: 1px solid #e2e8f0;
+            background: var(--white);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid #edf2f7;
+            position: relative;
+}
+
+        .tip-card:hover { transform: translateY(-10px); box-shadow: 0 20px 30px rgba(0,0,0,0.1); }
+        .tip-card:hover { 
+            transform: translateY(-12px); 
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.1); 
+            border-color: #bfdbfe;
+        }
+
+        /* Phần Ảnh (Theo đúng vị trí bạn vẽ) */
+.tip-image {
+width: 100%;
+            height: 200px;
+            height: 220px;
+overflow: hidden;
+            background: #eee;
+            position: relative;
+}
+        
+        /* Badge nhãn dán trên ảnh */
+        .category-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            z-index: 10;
+            text-transform: uppercase;
+        }
+
+.tip-image img {
+width: 100%;
+height: 100%;
+            object-fit: cover; /* Ảnh sẽ luôn lấp đầy khung */
+            transition: 0.5s;
+            object-fit: cover;
+            transition: 0.6s;
+}
+.tip-card:hover .tip-image img { transform: scale(1.1); }
+
+        /* Phần Nội dung */
+        .tip-content { padding: 25px; }
+        .tip-content h3 { font-size: 1.3rem; margin-bottom: 10px; color: #0f172a; }
+        .tip-content p { color: #64748b; font-size: 0.95rem; line-height: 1.6; }
+        .tip-content { padding: 30px; }
+        .tip-content h3 { 
+            font-size: 1.4rem; 
+            margin-bottom: 12px; 
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans';
+        }
+        .tip-content p { 
+            color: var(--text-muted); 
+            font-size: 1rem; 
+            line-height: 1.7; 
+        }
+
+        footer { text-align: center; padding: 40px; color: #94a3b8; border-top: 1px solid #e2e8f0; }
+        footer { 
+            text-align: center; 
+            padding: 50px; 
+            color: var(--text-muted); 
+            background: var(--white);
+            border-top: 1px solid #e2e8f0; 
+            font-size: 0.9rem;
         }
 
         @media (max-width: 768px) {
-            .nav-links span { display: none; } /* Ẩn chữ trên mobile, giữ icon */
             .title-section h1 { font-size: 2rem; }
+            .tips-grid { grid-template-columns: 1fr; }
         }
-    </style>
+</style>
 </head>
 <body>
 
-    <nav class="navbar">
-        <a href="index.html" class="logo-container">
-            <i class="fa-solid fa-house-medical logo-icon"></i>
-            <span class="logo-text">HealthScan<span>AI</span></span>
+<nav class="navbar">
+        <a href="index.html" class="logo">HEALTHSCAN AI</a>
+        <a href="index.html" class="logo">
+            <i class="fa-solid fa-hand-holding-medical"></i>
+            <span>HealthScan<b>AI</b></span>
         </a>
-        
-        <div class="nav-links">
-            <a href="index.html"><i class="fa-solid fa-circle-plus"></i> <span>Chẩn đoán</span></a>
-            <a href="tips.html" class="active"><i class="fa-solid fa-lightbulb"></i> <span>Mẹo sức khỏe</span></a>
-            <a href="#"><i class="fa-solid fa-circle-info"></i> <span>Hỗ trợ</span></a>
-        </div>
-    </nav>
+<div class="nav-links">
+            <a href="index.html">Trang chủ</a>
+            <a href="index.html">Chẩn đoán</a>
+<a href="tips.html" class="active">Mẹo sức khỏe</a>
+            <a href="support.html">Hỗ trợ</a>
+</div>
+</nav>
 
-    <div class="title-section">
-        <h1>Cẩm nang sức khỏe</h1>
-        <p>Kiến thức y khoa bổ ích giúp bạn học tập và sinh hoạt tốt hơn mỗi ngày</p>
-    </div>
+<div class="title-section">
+<h1>Cẩm nang sức khỏe</h1>
+        <p>Kiến thức y khoa bổ ích dành cho học sinh</p>
+        <p>Kiến thức y khoa bổ ích dành riêng cho cộng đồng học sinh</p>
+</div>
 
-    <main class="tips-grid">
-        <article class="tip-card">
-            <div class="tip-image">
-                <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=600" alt="Uống nước">
-            </div>
-            <div class="tip-content">
-                <h3>Thói quen uống nước</h3>
-                <p>Nước giúp thanh lọc cơ thể và duy trì sự tỉnh táo tối đa trong các tiết học căng thẳng. Hãy uống đủ 2 lít mỗi ngày.</p>
-            </div>
-        </article>
+<main class="tips-grid">
+<article class="tip-card">
+            <div class="category-badge">Dinh dưỡng</div>
+<div class="tip-image">
+<img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=600" alt="Nước">
+</div>
+<div class="tip-content">
+<h3>Thói quen uống nước</h3>
+                <p>Nước giúp thanh lọc cơ thể và duy trì sự tỉnh táo tối đa trong các tiết học căng thẳng.</p>
+                <p>Nước giúp thanh lọc cơ thể và duy trì sự tỉnh táo tối đa trong các tiết học căng thẳng. Đừng đợi đến khi khát mới uống nhé!</p>
+</div>
+</article>
 
-        <article class="tip-card">
-            <div class="tip-image">
-                <img src="https://images.unsplash.com/photo-1511295742364-911917175477?q=80&w=600" alt="Giấc ngủ">
-            </div>
-            <div class="tip-content">
-                <h3>Giấc ngủ & Trí nhớ</h3>
-                <p>Ngủ đủ giấc giúp não bộ sắp xếp lại kiến thức bạn đã học được trong ngày một cách logic và bền vững hơn.</p>
-            </div>
-        </article>
+<article class="tip-card">
+            <div class="category-badge">Sinh hoạt</div>
+<div class="tip-image">
+<img src="https://images.unsplash.com/photo-1511295742364-911917175477?q=80&w=600" alt="Ngủ">
+</div>
+<div class="tip-content">
+<h3>Giấc ngủ & Trí nhớ</h3>
+                <p>Ngủ đủ giấc giúp não bộ sắp xếp lại kiến thức bạn đã học được trong ngày một cách logic.</p>
+                <p>Một giấc ngủ sâu từ 7-8 tiếng giúp não bộ củng cố kiến thức và tái tạo năng lượng cho ngày học tiếp theo.</p>
+</div>
+</article>
 
-        <article class="tip-card">
-            <div class="tip-image">
-                <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=600" alt="Ăn uống">
-            </div>
-            <div class="tip-content">
-                <h3>Chế độ ăn xanh</h3>
-                <p>Rau xanh cung cấp chất xơ và vitamin thiết yếu giúp hệ tiêu hóa khỏe mạnh, tránh cảm giác mệt mỏi sau khi ăn.</p>
-            </div>
-        </article>
+<article class="tip-card">
+            <div class="category-badge">Dinh dưỡng</div>
+<div class="tip-image">
+<img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=600" alt="Ăn uống">
+</div>
+<div class="tip-content">
+<h3>Chế độ ăn xanh</h3>
+                <p>Rau xanh cung cấp chất xơ và vitamin giúp hệ tiêu hóa khỏe mạnh, tránh mệt mỏi sau khi ăn.</p>
+                <p>Tăng cường rau quả trong bữa ăn giúp cung cấp chất xơ và vitamin, hỗ trợ hệ miễn dịch luôn ở trạng thái tốt nhất.</p>
+</div>
+</article>
 
-        <article class="tip-card">
-            <div class="tip-image">
-                <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=600" alt="Vận động">
-            </div>
-            <div class="tip-content">
-                <h3>Vận động thể chất</h3>
-                <p>Chỉ cần 15-30 phút vận động nhẹ mỗi ngày sẽ giúp giải tỏa Stress và tăng cường hormone hạnh phúc.</p>
-            </div>
-        </article>
+<article class="tip-card">
+            <div class="category-badge">Tâm lý</div>
+<div class="tip-image">
+<img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=600" alt="Vận động">
+</div>
+<div class="tip-content">
+<h3>Vận động thể chất</h3>
+                <p>Chỉ cần 15-30 phút vận động nhẹ mỗi ngày sẽ giúp giải tỏa Stress hiệu quả hơn bất kỳ thuốc nào.</p>
+                <p>Đi bộ nhẹ nhàng hoặc chơi một môn thể thao yêu thích sau giờ học là cách tốt nhất để "xả" Stress mùa thi cử.</p>
+</div>
+</article>
 
-        <article class="tip-card">
-            <div class="tip-image">
-                <img src="https://images.unsplash.com/photo-1547082299-de196ea013d6?q=80&w=600" alt="Mắt">
-            </div>
-            <div class="tip-content">
-                <h3>Bảo vệ đôi mắt</h3>
-                <p>Áp dụng quy tắc 20-20-20: Cứ mỗi 20 phút nhìn màn hình, hãy nhìn xa 20 feet (6m) trong 20 giây.</p>
-            </div>
-        </article>
+<article class="tip-card">
+            <div class="category-badge">Nhãn khoa</div>
+<div class="tip-image">
+<img src="https://images.unsplash.com/photo-1547082299-de196ea013d6?q=80&w=600" alt="Mắt">
+</div>
+<div class="tip-content">
+<h3>Bảo vệ đôi mắt</h3>
+                <p>Quy tắc 20-20-20 giúp giảm mỏi mắt khi phải nhìn màn hình máy tính và tài liệu quá lâu.</p>
+                <p>Hãy nhớ quy tắc 20-20-20: Mỗi 20 phút làm việc với máy tính, hãy nhìn xa 20 feet (6m) trong 20 giây.</p>
+</div>
+</article>
 
-        <article class="tip-card">
-            <div class="tip-image">
-                <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=600" alt="Vệ sinh">
-            </div>
-            <div class="tip-content">
-                <h3>Vệ sinh đúng cách</h3>
-                <p>Rửa tay thường xuyên bằng xà phòng là "vaccine" đơn giản nhất để bảo vệ bạn khỏi các bệnh lây nhiễm.</p>
-            </div>
-        </article>
-    </main>
+<article class="tip-card">
+            <div class="category-badge">Phòng dịch</div>
+<div class="tip-image">
+<img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=600" alt="Sạch sẽ">
+</div>
+<div class="tip-content">
+<h3>Vệ sinh đúng cách</h3>
+                <p>Giữ bàn tay sạch sẽ là chìa khóa vàng để bảo vệ bạn khỏi các dịch bệnh lây nhiễm tại trường học.</p>
+                <p>Rửa tay thường xuyên với xà phòng là biện pháp đơn giản nhưng hiệu quả nhất để phòng tránh các bệnh truyền nhiễm.</p>
+</div>
+</article>
+</main>
 
-    <footer>
-        <p>&copy; 2026 HealthScan Pro - Phát triển bởi Nguyễn Minh Đức | Dự án Khoa học kỹ thuật</p>
-    </footer>
+<footer>
+        <p>&copy; 2026 HealthScan Pro - Thiết kế theo bản phác thảo của Nguyễn Minh Đức</p>
+        <p>&copy; 2026 HealthScan Pro - Phát triển bởi Nguyễn Minh Đức</p>
+</footer>
 
 </body>
-</html>
