@@ -1,224 +1,201 @@
 /**
+ * HealthScan Pro - Core Logic Engine
+ * Phiên bản: 3.0 (ProVip)
+ * Tác giả: Nguyễn Minh Đức
+ */
 
-* HealthScan Pro - Script Logic
-* Người thực hiện: Nguyễn Minh Đức
-  */
+// 1. DATABASE NÂNG CẤP (Đã được tối ưu từ dữ liệu gốc của bạn)
+const diseasesDatabase = [
+    /* Hô hấp */
+    { name: "Cảm cúm", group: "Hô hấp", keywords: ["sốt", "ho", "sổ mũi", "mệt mỏi", "đau người"], risk: "Trung bình", advice: "Nghỉ ngơi, uống nhiều nước ấm và bổ sung vitamin C." },
+    { name: "Cảm lạnh", group: "Hô hấp", keywords: ["hắt hơi", "chảy nước mũi", "nghẹt mũi", "viêm mũi"], risk: "Thấp", advice: "Giữ ấm cơ thể và súc miệng nước muối." },
+    { name: "Viêm họng", group: "Hô hấp", keywords: ["đau họng", "rát họng", "khó nuốt"], risk: "Thấp", advice: "Uống nước ấm và hạn chế đồ lạnh." },
+    { name: "Viêm phế quản", group: "Hô hấp", keywords: ["ho kéo dài", "tức ngực", "khó thở"], risk: "Trung bình", advice: "Tránh khói bụi và giữ ấm phổi." },
+    { name: "Hen suyễn", group: "Hô hấp", keywords: ["khò khè", "khó thở", "tức ngực"], risk: "Cao", advice: "Mang theo thuốc xịt dự phòng và tránh vận động quá sức." },
+    { name: "Sốt xuất huyết", group: "Truyền nhiễm", keywords: ["sốt cao liên tục", "phát ban đỏ", "xuất huyết", "đau hốc mắt"], risk: "Rất cao", advice: "Đi xét nghiệm máu ngay tại bệnh viện. Không tự ý uống Aspirin!" },
 
-//////////////////////////////
-// DATABASE
-//////////////////////////////
+    /* Tiêu hóa */
+    { name: "Đau dạ dày", group: "Tiêu hóa", keywords: ["đau bụng trên", "ợ chua", "buồn nôn", "đau bao tử"], risk: "Trung bình", advice: "Ăn uống đúng giờ, tránh đồ chua cay và căng thẳng." },
+    { name: "Ngộ độc thực phẩm", group: "Tiêu hóa", keywords: ["nôn mửa", "đau quặn bụng", "tiêu chảy sau ăn"], risk: "Cao", advice: "Uống nhiều nước Oresol và đến cơ sở y tế gần nhất." },
+    { name: "Viêm ruột thừa", group: "Tiêu hóa", keywords: ["đau bụng phải", "đau hố chậu", "sốt nhẹ kèm đau bụng"], risk: "Rất cao", advice: "Đi cấp cứu ngay, không được tự uống thuốc giảm đau!" },
 
-const diseasesDatabase = [ /* ================= HÔ HẤP (1-15) ================= */ { name: "Cảm cúm", group: "Hô hấp", keywords: ["sốt", "ho", "sổ mũi", "mệt mỏi", "đau người"], risk: "Trung bình", advice: "Nghỉ ngơi, uống nhiều nước ấm và bổ sung vitamin C." }, { name: "Cảm lạnh", group: "Hô hấp", keywords: ["hắt hơi", "chảy nước mũi", "nghẹt mũi", "viêm mũi"], risk: "Thấp", advice: "Giữ ấm cơ thể và súc miệng nước muối." }, { name: "Viêm họng", group: "Hô hấp", keywords: ["đau họng", "rát họng", "khó nuốt"], risk: "Thấp", advice: "Uống nước ấm và hạn chế đồ lạnh." }, { name: "Viêm amidan", group: "Hô hấp", keywords: ["sưng họng", "nuốt đau", "sốt nhẹ"], risk: "Trung bình", advice: "Vệ sinh răng miệng và đi khám nếu sưng mủ." }, { name: "Ho khan", group: "Hô hấp", keywords: ["ho khan", "ngứa cổ"], risk: "Thấp", advice: "Giữ ấm cổ và uống mật ong." }, { name: "Ho có đờm", group: "Hô hấp", keywords: ["ho đờm", "đờm", "nặng ngực"], risk: "Trung bình", advice: "Uống nhiều nước ấm để loãng đờm." }, { name: "Viêm xoang", group: "Hô hấp", keywords: ["đau trán", "nghẹt mũi", "chảy mũi", "xoang"], risk: "Trung bình", advice: "Xông hơi nước ấm và vệ sinh mũi." }, { name: "Viêm phế quản", group: "Hô hấp", keywords: ["ho kéo dài", "tức ngực", "khó thở"], risk: "Trung bình", advice: "Tránh khói bụi và giữ ấm phổi." }, { name: "Hen suyễn", group: "Hô hấp", keywords: ["khò khè", "khó thở", "tức ngực"], risk: "Cao", advice: "Mang theo thuốc xịt dự phòng và tránh vận động quá sức." }, { name: "Sốt siêu vi", group: "Hô hấp", keywords: ["sốt cao", "ớn lạnh", "đau nhức"], risk: "Trung bình", advice: "Uống thuốc hạ sốt và bù nước Oresol." }, { name: "Viêm mũi dị ứng", group: "Hô hấp", keywords: ["ngứa mũi", "hắt hơi", "thời tiết"], risk: "Thấp", advice: "Sử dụng nước muối sinh lý rửa mũi." }, { name: "Chảy máu cam", group: "Hô hấp", keywords: ["chảy máu mũi", "máu cam"], risk: "Thấp", advice: "Cúi đầu nhẹ về trước, bóp chặt cánh mũi." }, { name: "Khàn tiếng", group: "Hô hấp", keywords: ["mất giọng", "khàn giọng"], risk: "Thấp", advice: "Hạn chế nói to, uống nước giá đỗ." }, { name: "Viêm phổi nhẹ", group: "Hô hấp", keywords: ["ho nặng", "sốt cao", "khó thở"], risk: "Cao", advice: "Cần đến bác sĩ chụp X-quang phổi ngay." }, { name: "Ngạt mũi đêm", group: "Hô hấp", keywords: ["khó thở khi nằm", "nghẹt mũi đêm"], risk: "Thấp", advice: "Kê cao gối khi ngủ và dùng tinh dầu tràm." }, /* ================= TIÊU HÓA (16-35) ================= */ { name: "Đau dạ dày", group: "Tiêu hóa", keywords: ["đau bụng trên", "ợ chua", "buồn nôn", "bao tử"], risk: "Trung bình", advice: "Ăn uống đúng giờ, tránh đồ chua cay." }, { name: "Trào ngược dạ dày", group: "Tiêu hóa", keywords: ["ợ nóng", "nóng ngực", "nghẹn cổ"], risk: "Trung bình", advice: "Không nằm ngay sau khi ăn." }, { name: "Tiêu chảy", group: "Tiêu hóa", keywords: ["đi ngoài", "phân lỏng", "đau bụng"], risk: "Trung bình", advice: "Bù nước Oresol và ăn cháo loãng." }, { name: "Táo bón", group: "Tiêu hóa", keywords: ["khó đi ngoài", "đầy hơi"], risk: "Thấp", advice: "Ăn nhiều chất xơ (rau xanh, khoai lang)." }, { name: "Ngộ độc thực phẩm", group: "Tiêu hóa", keywords: ["nôn mửa", "đau quặn bụng", "tiêu chảy sau ăn"], risk: "Cao", advice: "Uống nhiều nước và đến cơ sở y tế gần nhất." }, { name: "Đầy bụng", group: "Tiêu hóa", keywords: ["chướng bụng", "khó tiêu"], risk: "Thấp", advice: "Uống trà gừng ấm và xoa bụng." }, { name: "Viêm ruột thừa", group: "Tiêu hóa", keywords: ["đau bụng phải", "đau hố chậu"], risk: "Rất cao", advice: "Đi cấp cứu ngay, không được tự uống thuốc." }, { name: "Nhiệt miệng", group: "Tiêu hóa", keywords: ["loét miệng", "đau niêm mạc", "nhiệt miệng"], risk: "Thấp", advice: "Bổ sung Vitamin C và uống nước mát." }, { name: "Nhiễm giun", group: "Tiêu hóa", keywords: ["ngứa hậu môn", "đau bụng vặt"], risk: "Trung bình", advice: "Tẩy giun định kỳ 6 tháng một lần." }, { name: "Dị ứng đồ ăn", group: "Tiêu hóa", keywords: ["nổi mẩn sau ăn", "ngứa họng sau ăn"], risk: "Cao", advice: "Ngừng ăn thực phẩm đó và dùng thuốc dị ứng." }, { name: "Hội chứng ruột kích thích", group: "Tiêu hóa", keywords: ["đau bụng khi lo lắng", "đi ngoài khi thi"], risk: "Trung bình", advice: "Giữ tinh thần thoải mái, tránh Cafein." }, { name: "Viêm loét dạ dày", group: "Tiêu hóa", keywords: ["đau dạ dày cấp", "nôn ra máu"], risk: "Rất cao", advice: "Đến bệnh viện nội soi dạ dày ngay." }, { name: "Đau bụng kinh", group: "Tiêu hóa", keywords: ["đau bụng dưới nữ", "đau lưng tới kỳ"], risk: "Thấp", advice: "Chườm ấm và uống nước gừng." }, { name: "Sôi bụng", group: "Tiêu hóa", keywords: ["bụng kêu", "đầy hơi"], risk: "Thấp", advice: "Hạn chế đồ uống có gas và sữa." }, { name: "Co thắt đại tràng", group: "Tiêu hóa", keywords: ["đau bụng quặn", "mót rặn"], risk: "Trung bình", advice: "Ăn chín uống sôi, tránh đồ sống." }, /* ================= THẦN KINH & TÂM LÝ (36-55) ================= */ { name: "Đau đầu do căng thẳng", group: "Thần kinh", keywords: ["đau đầu", "nhức đầu", "căng đầu"], risk: "Thấp", advice: "Nghỉ ngơi, rời xa màn hình máy tính." }, { name: "Migraine", group: "Thần kinh", keywords: ["đau nửa đầu", "sợ ánh sáng"], risk: "Trung bình", advice: "Nằm nghỉ trong phòng tối và yên tĩnh." }, { name: "Stress học đường", group: "Tâm lý", keywords: ["căng thẳng", "mệt mỏi", "khó tập trung", "áp lực"], risk: "Trung bình", advice: "Sắp xếp lại lịch học, đi dạo nhẹ nhàng." }, { name: "Mất ngủ", group: "Thần kinh", keywords: ["khó ngủ", "trằn trọc"], risk: "Trung bình", advice: "Tắt điện thoại trước khi ngủ 1 tiếng." }, { name: "Chóng mặt", group: "Thần kinh", keywords: ["hoa mắt", "xây xẩm"], risk: "Trung bình", advice: "Đứng dậy từ từ, bổ sung thực phẩm giàu sắt." }, { name: "Hạ đường huyết", group: "Thần kinh", keywords: ["run tay", "đói lả", "toát mồ hôi"], risk: "Cao", advice: "Uống nước đường hoặc ăn kẹo ngay." }, { name: "Say nắng", group: "Thần kinh", keywords: ["đau đầu nắng", "khát nước cực độ"], risk: "Cao", advice: "Vào chỗ mát, chườm khăn ẩm lên trán." }, { name: "Suy nhược cơ thể", group: "Thần kinh", keywords: ["kiệt sức", "uể oải"], risk: "Trung bình", advice: "Ăn uống đủ chất và ngủ đủ 8 tiếng." }, { name: "Hồi hộp/Lo âu", group: "Tâm lý", keywords: ["tim đập nhanh", "run rẩy"], risk: "Thấp", advice: "Tập hít thở sâu theo nhịp 4-7-8." }, { name: "Say tàu xe", group: "Thần kinh", keywords: ["buồn nôn đi xe", "chóng mặt đi xe"], risk: "Thấp", advice: "Ngửi vỏ quýt hoặc dùng miếng dán chống say." }, { name: "Đau đầu do thiếu ngủ", group: "Thần kinh", keywords: ["nhức đầu do thức khuya"], risk: "Trung bình", advice: "Ngủ bù và không dùng trà/cafe buổi tối." }, { name: "Rối loạn nhịp sinh học", group: "Thần kinh", keywords: ["ngủ ngày cày đêm"], risk: "Trung bình", advice: "Tập thói quen dậy sớm và tập thể dục sáng." }, /* ================= CƠ XƯƠNG KHỚP (56-75) ================= */ { name: "Đau vai gáy", group: "Cơ xương", keywords: ["đau vai", "mỏi gáy", "cứng cổ"], risk: "Thấp", advice: "Tập các bài vận động cổ nhẹ nhàng." }, { name: "Đau lưng", group: "Cơ xương", keywords: ["đau lưng", "mỏi lưng"], risk: "Thấp", advice: "Chỉnh lại tư thế ngồi học thẳng lưng." }, { name: "Chuột rút", group: "Cơ xương", keywords: ["chuột rút", "co cơ"], risk: "Thấp", advice: "Bổ sung Canxi và Magie qua thực phẩm." }, { name: "Căng cơ", group: "Cơ xương", keywords: ["đau cơ", "nhức cơ sau tập"], risk: "Thấp", advice: "Chườm ấm và massage vùng cơ bị đau." }, { name: "Bong gân", group: "Cơ xương", keywords: ["sưng chân", "đau mắt cá"], risk: "Trung bình", advice: "Chườm đá ngay lập tức và băng ép." }, { name: "Mỏi tay do viết bài", group: "Cơ xương", keywords: ["mỏi ngón tay", "đau bàn tay"], risk: "Thấp", advice: "Thư giãn tay sau mỗi 30 phút viết." }, { name: "Vẹo cột sống", group: "Cơ xương", keywords: ["lệch lưng", "lệch vai"], risk: "Trung bình", advice: "Tránh xách cặp nặng một bên vai." }, { name: "Đau đầu gối", group: "Cơ xương", keywords: ["nhức đầu gối", "lạo xạo khớp"], risk: "Thấp", advice: "Tránh ngồi xổm quá lâu." }, { name: "Tê bì chân tay", group: "Cơ xương", keywords: ["tê tay", "tê chân"], risk: "Thấp", advice: "Vận động tay chân thường xuyên để lưu thông máu." }, { name: "Chấn thương thể thao", group: "Cơ xương", keywords: ["va chạm", "bầm tím"], risk: "Trung bình", advice: "Sử dụng thuốc tan bầm và nghỉ ngơi." }, /* ================= MẮT & DA LIỄU (76-95) ================= */ { name: "Mỏi mắt", group: "Mắt", keywords: ["mỏi mắt", "mờ mắt"], risk: "Thấp", advice: "Nhìn xa 20 feet sau mỗi 20 phút." }, { name: "Khô mắt", group: "Mắt", keywords: ["khô mắt", "cộm mắt"], risk: "Thấp", advice: "Nhỏ nước muối sinh lý hoặc nước mắt nhân tạo." }, { name: "Đau mắt đỏ", group: "Mắt", keywords: ["mắt đỏ", "nhiều ghèn"], risk: "Trung bình", advice: "Cách ly đồ dùng cá nhân để tránh lây lan." }, { name: "Lẹo mắt", group: "Mắt", keywords: ["sưng mí", "mụn ở mắt"], risk: "Thấp", advice: "Chườm khăn ấm để mụn nhanh tan." }, { name: "Mụn trứng cá", group: "Da liễu", keywords: ["mụn", "nổi mụn"], risk: "Thấp", advice: "Rửa mặt sạch và không tự ý nặn mụn." }, { name: "Mề đay", group: "Da liễu", keywords: ["ngứa da", "nổi sẩn"], risk: "Trung bình", advice: "Tìm nguyên nhân gây dị ứng để phòng tránh." }, { name: "Cháy nắng", group: "Da liễu", keywords: ["da đỏ nắng", "rát da"], risk: "Thấp", advice: "Sử dụng gel lô hội để làm dịu da." }, { name: "Hắc lào", group: "Da liễu", keywords: ["ngứa vòng tròn", "lác đồng tiền"], risk: "Trung bình", advice: "Giữ da khô ráo và bôi thuốc trị nấm." }, { name: "Lang ben", group: "Da liễu", keywords: ["đốm trắng", "loang lổ"], risk: "Thấp", advice: "Tắm rửa sạch sẽ, tránh dùng chung khăn tắm." }, { name: "Rôm sảy", group: "Da liễu", keywords: ["hạt đỏ ngứa", "mẩn ngứa nóng"], risk: "Thấp", advice: "Mặc đồ thoáng mát và tắm nước lá." }, { name: "Kiến ba khoang", group: "Da liễu", keywords: ["phỏng da", "rát da kiến", "ba khoang"], risk: "Trung bình", advice: "Rửa bằng nước sạch, bôi thuốc mỡ làm dịu." }, { name: "Ghẻ", group: "Da liễu", keywords: ["ngứa kẽ tay", "ngứa đêm"], risk: "Trung bình", advice: "Vệ sinh giường chiếu, dùng thuốc bôi chuyên dụng." }, { name: "Mụn cóc", group: "Da liễu", keywords: ["mụn cứng tay", "mụn ké"], risk: "Thấp", advice: "Đến da liễu để xử lý bằng nitơ lỏng." }, /* ================= TRUYỀN NHIỄM & DINH DƯỠNG (96-100) ================= */ { name: "Thiếu máu", group: "Dinh dưỡng", keywords: ["xanh xao", "chóng mặt thiếu máu"], risk: "Trung bình", advice: "Ăn nhiều thịt đỏ và rau đậm màu." }, { name: "Thiếu Canxi", group: "Dinh dưỡng", keywords: ["tê chân tay", "dễ gãy móng"], risk: "Thấp", advice: "Bổ sung sữa và tắm nắng sáng." }, { name: "Sốt xuất huyết", group: "Truyền nhiễm", keywords: ["sốt cao liên tục", "phát ban đỏ", "xuất huyết"], risk: "Rất cao", advice: "Đi xét nghiệm máu ngay tại bệnh viện." }, { name: "Thủy đậu", group: "Truyền nhiễm", keywords: ["mụn nước", "ngứa toàn thân", "trái rạ"], risk: "Trung bình", advice: "Tránh gãi vỡ mụn và bôi thuốc xanh." }, { name: "Quai bị", group: "Truyền nhiễm", keywords: ["sưng quai hàm", "sốt sưng tai"], risk: "Cao", advice: "Nghỉ ngơi tuyệt đối, tránh vận động mạnh." } ];
+    /* Thần kinh & Tâm lý */
+    { name: "Stress học đường", group: "Tâm lý", keywords: ["căng thẳng", "áp lực", "mệt mỏi", "khó tập trung", "lo âu"], risk: "Trung bình", advice: "Hãy dành thời gian nghỉ ngơi, tập hít thở sâu và chia sẻ với người thân." },
+    { name: "Migraine", group: "Thần kinh", keywords: ["đau nửa đầu", "sợ ánh sáng", "nhức đầu từng cơn"], risk: "Trung bình", advice: "Nằm nghỉ trong phòng tối và yên tĩnh, hạn chế dùng điện thoại." },
+    { name: "Hạ đường huyết", group: "Thần kinh", keywords: ["run tay", "đói lả", "toát mồ hôi", "bủn rủn"], risk: "Cao", advice: "Uống ngay 1 cốc nước đường hoặc ăn kẹo ngọt." },
 
-//////////////////////////////
-// PHÂN TÍCH TRIỆU CHỨNG
-//////////////////////////////
+    /* Cơ xương khớp & Mắt */
+    { name: "Mỏi mắt kỹ thuật số", group: "Mắt", keywords: ["mỏi mắt", "mờ mắt", "khô mắt", "nhìn máy tính lâu"], risk: "Thấp", advice: "Áp dụng quy tắc 20-20-20: nhìn xa 6m mỗi 20 phút." },
+    { name: "Đau vai gáy", group: "Cơ xương", keywords: ["đau vai", "mỏi gáy", "cứng cổ", "ngồi lâu"], risk: "Thấp", advice: "Tập các bài vận động cổ nhẹ nhàng và chỉnh lại tư thế ngồi." }
+];
 
-function checkSymptoms(){
-
-const input = document.getElementById("symptomInput");
-const text = input.value.trim();
-
-if(text === "") return;
-
-appendMessage("user", escapeHTML(text));
-
-input.value = "";
-
-showTyping();
-
-setTimeout(()=>{
-
-removeTyping();
-
-const textLower = text.toLowerCase();
-
-let results = [];
-
-diseasesDatabase.forEach(disease=>{
-
-let score = 0;
-
-disease.keywords.forEach(keyword=>{
-
-if(textLower.includes(keyword)){
-
-score += keyword.split(" ").length;
-
-}
-
-});
-
-if(score > 0){
-
-results.push({...disease,score});
-
-}
-
-});
-
-results.sort((a,b)=> b.score - a.score);
-
-if(results.length === 0){
-
-appendMessage("ai","⚠️ HealthScan chưa nhận diện được triệu chứng này. Hãy mô tả chi tiết hơn.");
-
-return;
-
-}
-
-showResults(results);
-
-},800);
-
-}
-
-//////////////////////////////
-// HIỂN THỊ KẾT QUẢ
-//////////////////////////////
-
-function showResults(results){
-
-let html = "<b>🔍 Kết quả phân tích:</b><br><br>";
-
-results.slice(0,3).forEach((disease,index)=>{
-
-const percent = Math.min(100, disease.score * 20);
-
-const star = index === 0 ? "⭐ Khả năng cao nhất" : "";
-
-html += `
-
-<div class="disease-card">
-
-<b>${disease.name}</b> ${star}
-
-<div style="font-size:12px;color:#888">Nhóm: ${disease.group}</div>
-
-<div>📊 Độ khớp: <b>${percent}%</b></div>
-
-<div>⚠️ Mức độ: <b>${disease.risk}</b></div>
-
-<div>💡 ${disease.advice}</div>
-
-</div>
-
-<br>
-
-`;
-
-});
-
-appendMessage("ai",html);
-
-}
-
-//////////////////////////////
-// CHAT MESSAGE
-//////////////////////////////
-
-function appendMessage(sender,content){
-
+// 2. CÁC HÀM XỬ LÝ GIAO DIỆN SIÊU CẤP
 const chatBox = document.getElementById("chatBox");
-
-const wrapper = document.createElement("div");
-
-wrapper.className = "message-wrapper";
-
-wrapper.innerHTML = `
-
-<div class="message ${sender}-message">
-
-<div class="msg-content">${content}</div>
-
-</div>
-
-`;
-
-chatBox.appendChild(wrapper);
-
-chatBox.scrollTop = chatBox.scrollHeight;
-
-}
-
-//////////////////////////////
-// TYPING EFFECT
-//////////////////////////////
-
-function showTyping(){
-
-appendMessage("ai",
-
-"<div class='typing-indicator'><span></span><span></span><span></span></div>"
-
-);
-
-}
-
-function removeTyping(){
-
-const typing = document.querySelector(".typing-indicator");
-
-if(typing && typing.closest(".message-wrapper")){
-
-typing.closest(".message-wrapper").remove();
-
-}
-
-}
-
-//////////////////////////////
-// QUICK SEARCH
-//////////////////////////////
-
-function quickSearch(symptom){
-
-document.getElementById("symptomInput").value = symptom;
-
-checkSymptoms();
-
-}
-
-//////////////////////////////
-// SECURITY
-//////////////////////////////
-
-function escapeHTML(text){
-
-return text
-
-.replace(/&/g,"&")
-
-.replace(/</g,"<")
-
-.replace(/>/g,">");
-
-}
-
-//////////////////////////////
-// EVENTS
-//////////////////////////////
-
-document.addEventListener("DOMContentLoaded",()=>{
-
-const input = document.getElementById("symptomInput");
-
+const inputField = document.getElementById("symptomInput");
 const sendBtn = document.getElementById("sendBtn");
 
-input.focus();
-
-input.addEventListener("keydown",(e)=>{
-
-if(e.key === "Enter"){
-
-e.preventDefault();
-
-checkSymptoms();
-
+// Hàm thêm tin nhắn vào khung chat với hiệu ứng mượt
+function appendMessage(sender, content, isHTML = false) {
+    const wrapper = document.createElement("div");
+    wrapper.className = `message-wrapper ${sender}-wrapper`;
+    
+    const time = new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+    
+    wrapper.innerHTML = `
+        <div class="message ${sender}-message">
+            <div class="msg-content">${content}</div>
+        </div>
+        <span class="msg-time">${sender === 'ai' ? 'HealthScan AI' : 'Bạn'} • ${time}</span>
+    `;
+    
+    chatBox.appendChild(wrapper);
+    
+    // Cuộn xuống dưới cùng
+    chatBox.scrollTo({
+        top: chatBox.scrollHeight,
+        behavior: 'smooth'
+    });
 }
 
-});
+// Hiệu ứng "AI đang suy nghĩ"
+function showTyping() {
+    const typingDiv = document.createElement("div");
+    typingDiv.id = "typing-indicator";
+    typingDiv.className = "message-wrapper ai-wrapper";
+    typingDiv.innerHTML = `
+        <div class="message ai-message">
+            <div class="typing-dots">
+                <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            </div>
+        </div>
+    `;
+    chatBox.appendChild(typingDiv);
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
 
-sendBtn.addEventListener("click",checkSymptoms);
+function removeTyping() {
+    const indicator = document.getElementById("typing-indicator");
+    if (indicator) indicator.remove();
+}
 
+// 3. THUẬT TOÁN PHÂN TÍCH TRIỆU CHỨNG (WEIGHTED SEARCH)
+function checkSymptoms() {
+    const text = inputField.value.trim();
+    if (!text) return;
+
+    // Hiển thị tin nhắn người dùng
+    appendMessage("user", escapeHTML(text));
+    inputField.value = "";
+
+    showTyping();
+
+    // Giả lập thời gian suy nghĩ của AI (800ms)
+    setTimeout(() => {
+        removeTyping();
+        const textLower = text.toLowerCase();
+        let results = [];
+
+        diseasesDatabase.forEach(disease => {
+            let score = 0;
+            disease.keywords.forEach(keyword => {
+                if (textLower.includes(keyword)) {
+                    score += 10; // Trọng số cơ bản
+                    // Cộng thêm điểm nếu từ khóa dài (độ chính xác cao hơn)
+                    if (keyword.length > 5) score += 5;
+                }
+            });
+
+            if (score > 0) {
+                results.push({ ...disease, score });
+            }
+        });
+
+        // Sắp xếp theo điểm số cao nhất
+        results.sort((a, b) => b.score - a.score);
+
+        if (results.length === 0) {
+            appendMessage("ai", "Xin lỗi Đức, mình chưa nhận diện được triệu chứng này. Bạn hãy thử mô tả kỹ hơn hoặc nhập các từ khóa như: 'sốt', 'đau bụng', 'mỏi mắt' nhé!");
+        } else {
+            renderDiseaseCards(results);
+        }
+    }, 800);
+}
+
+// 4. RENDER KẾT QUẢ DƯỚI DẠNG CARD CHUYÊN NGHIỆP
+function renderDiseaseCards(results) {
+    let headerMsg = "Dựa trên các triệu chứng bạn cung cấp, đây là phân tích từ hệ thống:";
+    appendMessage("ai", headerMsg);
+
+    results.slice(0, 2).forEach((disease, index) => {
+        const riskColor = disease.risk === "Rất cao" ? "#ef4444" : (disease.risk === "Cao" ? "#f59e0b" : "#10b981");
+        const cardHTML = `
+            <div class="disease-card" style="border-left: 5px solid ${riskColor}">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px">
+                    <strong style="font-size:1.1rem; color:#1e293b">${index === 0 ? '⭐ ' : ''}${disease.name}</strong>
+                    <span style="font-size:0.75rem; background:#f1f5f9; padding:2px 8px; border-radius:10px">${disease.group}</span>
+                </div>
+                <div style="font-size:0.9rem; margin-bottom:10px">
+                    <span style="color:var(--text-muted)">Mức độ rủi ro:</span> 
+                    <b style="color:${riskColor}">${disease.risk}</b>
+                </div>
+                <div style="background:#f8fafc; padding:10px; border-radius:8px; font-size:0.9rem; border: 1px dashed #cbd5e1">
+                    <i class="fa-solid fa-lightbulb" style="color:#f59e0b"></i> <b>Lời khuyên:</b> ${disease.advice}
+                </div>
+            </div>
+        `;
+        setTimeout(() => {
+            appendMessage("ai", cardHTML, true);
+        }, index * 300); // Hiển thị từng card một cách mượt mà
+    });
+
+    // Thêm cảnh báo y tế cuối cùng
+    setTimeout(() => {
+        const disclaimer = `
+            <div style="font-size:0.8rem; color:#94a3b8; font-style:italic; margin-top:10px">
+                * Lưu ý: Kết quả này chỉ mang tính chất tham khảo học đường. Nếu triệu chứng nặng hơn, hãy liên hệ phòng y tế trường hoặc bác sĩ ngay lập tức.
+            </div>
+        `;
+        appendMessage("ai", disclaimer, true);
+    }, 700);
+}
+
+// 5. CÁC TIỆN ÍCH BỔ SUNG
+function quickSearch(symptom) {
+    inputField.value = symptom;
+    checkSymptoms();
+}
+
+function clearChat() {
+    if (confirm("Bạn có chắc chắn muốn làm mới cuộc trò chuyện?")) {
+        chatBox.innerHTML = `
+            <div class="message-wrapper ai-wrapper">
+                <div class="message ai-message">Chào Đức! Hệ thống đã được làm mới. Mình có thể giúp gì cho sức khỏe của bạn lúc này?</div>
+            </div>
+        `;
+    }
+}
+
+function escapeHTML(str) {
+    const p = document.createElement("p");
+    p.textContent = str;
+    return p.innerHTML;
+}
+
+// Khởi tạo các sự kiện khi trang web sẵn sàng
+document.addEventListener("DOMContentLoaded", () => {
+    inputField.focus();
+    
+    // Thêm CSS cho phần Typing Indicator (vì nó sinh ra động)
+    const style = document.createElement('style');
+    style.innerHTML = `
+        .typing-dots { display: flex; gap: 4px; padding: 5px 0; }
+        .dot { width: 8px; height: 8px; background: #cbd5e1; border-radius: 50%; animation: typing 1s infinite; }
+        .dot:nth-child(2) { animation-delay: 0.2s; }
+        .dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typing { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+    `;
+    document.head.appendChild(style);
+
+    // Gán sự kiện cho nút gửi
+    sendBtn.addEventListener("click", checkSymptoms);
 });
