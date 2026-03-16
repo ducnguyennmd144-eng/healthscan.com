@@ -7,13 +7,80 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Plus+Jakarta+Sans:wght@800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <link rel="stylesheet" href="style.css">
-
     <style>
-        /* CSS riêng cho trang Index */
+        /* --- CSS BIẾN CHUNG --- */
+        :root {
+            --primary-blue: #3b82f6;
+            --mit-red: #A31F34;
+            --mit-dark: #8b1a2b;
+            --text-main: #1e293b;
+            --bg-light: #f8fafc;
+            --white: #ffffff;
+            --transition: all 0.3s ease;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+
+        /* --- NAVBAR SIÊU VIP (ĐỒNG BỘ) --- */
+        .navbar {
+            background: white;
+            height: 75px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .nav-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-decoration: none;
+            color: var(--primary-blue);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'Plus Jakarta Sans';
+        }
+
+        .logo span { color: var(--text-main); }
+        .logo b { color: var(--text-main); font-weight: 800; }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: #64748b;
+            font-size: 0.95rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+
+        .nav-item:hover, .nav-item.active {
+            color: var(--primary-blue);
+        }
+
+        /* --- PHẦN NỘI DUNG GỐC CỦA ĐỨC --- */
         .hero-section {
-            background: linear-gradient(to bottom, #fef2f2, var(--white));
-            padding: 60px 5% 40px;
+            background: linear-gradient(to bottom, #eff6ff, var(--white));
+            padding: 80px 5% 60px;
             text-align: center;
         }
 
@@ -25,33 +92,35 @@
 
         .search-box {
             background: white;
-            padding: 10px;
-            border-radius: 15px;
+            padding: 12px;
+            border-radius: 20px;
             display: flex;
-            box-shadow: 0 15px 35px rgba(163, 31, 52, 0.1);
-            border: 2px solid #eee;
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.1);
+            border: 2px solid #e2e8f0;
             transition: var(--transition);
         }
 
         .search-box:focus-within {
-            border-color: var(--mit-red);
+            border-color: var(--primary-blue);
             transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
         }
 
         .search-box input {
             flex: 1;
             border: none;
-            padding: 15px 20px;
+            padding: 15px 25px;
             font-size: 1.1rem;
             outline: none;
+            color: var(--text-main);
         }
 
         .btn-scan {
-            background: var(--mit-red);
+            background: var(--primary-blue);
             color: white;
             border: none;
-            padding: 0 30px;
-            border-radius: 10px;
+            padding: 0 35px;
+            border-radius: 15px;
             font-weight: 700;
             cursor: pointer;
             transition: var(--transition);
@@ -60,59 +129,70 @@
             gap: 10px;
         }
 
-        .btn-scan:hover {
-            background: var(--mit-dark);
-        }
+        .btn-scan:hover { background: #2563eb; transform: scale(1.02); }
 
-        /* Kết quả chẩn đoán */
         #result-area {
-            max-width: 800px;
-            margin: 0 auto 60px;
+            max-width: 850px;
+            margin: 0 auto 80px;
             padding: 0 20px;
-            display: none; /* Ẩn khi chưa có kết quả */
+            display: none;
         }
 
         .result-card {
-            animation: slideUp 0.4s ease-out;
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+            animation: slideUp 0.5s ease-out;
         }
 
         @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .disclaimer {
             font-size: 0.85rem;
-            color: #ef4444;
+            color: #b91c1c;
             background: #fef2f2;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 20px;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 30px;
             border: 1px solid #fee2e2;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: #94a3b8;
+            border-top: 1px solid #f1f5f9;
         }
     </style>
 </head>
 <body>
 
-    <header class="main-header">
-        <div class="top-announcement">Lương Thế Vinh High School | Science & Tech Project</div>
-        <nav class="navbar">
+    <nav class="navbar">
+        <div class="nav-container">
             <a href="index.html" class="logo">
                 <i class="fa-solid fa-hand-holding-medical"></i>
-                <span>HealthScan AI</span>
+                <span>HealthScan<b>AI</b></span>
             </a>
             <div class="nav-links">
-                <a href="index.html" class="active">Chẩn đoán</a>
-                <a href="tips.html">Mẹo sức khỏe</a>
-                <a href="support.html">Hỗ trợ</a>
+                <a href="index.html" class="nav-item active"><i class="fa-solid fa-comment-medical"></i> Chẩn đoán</a>
+                <a href="tips.html" class="nav-item"><i class="fa-solid fa-lightbulb"></i> Mẹo sức khỏe</a>
+                <a href="support.html" class="nav-item"><i class="fa-solid fa-circle-info"></i> Hỗ trợ</a>
             </div>
-        </nav>
-    </header>
+        </div>
+    </nav>
 
     <main>
         <section class="hero-section">
-            <h1 style="font-size: 2.5rem; color: var(--mit-dark); margin-bottom: 15px;">Bạn đang cảm thấy thế nào?</h1>
-            <p style="color: var(--text-muted); font-size: 1.1rem;">Nhập các triệu chứng của bạn để AI phân tích sức khỏe học đường.</p>
+            <h1 style="font-size: 3rem; color: var(--text-main); margin-bottom: 20px; font-family: 'Plus Jakarta Sans';">Bạn đang cảm thấy thế nào?</h1>
+            <p style="color: #64748b; font-size: 1.2rem;">Nhập các triệu chứng của bạn để AI phân tích sức khỏe học đường.</p>
         </section>
 
         <div class="search-container">
@@ -122,30 +202,28 @@
                     <i class="fa-solid fa-microscope"></i> PHÂN TÍCH
                 </button>
             </div>
-            <p style="text-align: center; margin-top: 15px; font-size: 0.9rem; color: #999;">
-                Gợi ý: đau bụng, ho, căng thẳng, đau lưng...
+            <p style="text-align: center; margin-top: 20px; font-size: 0.95rem; color: #94a3b8;">
+                <i class="fa-solid fa-circle-info"></i> Gợi ý: đau bụng, ho, căng thẳng, đau lưng...
             </p>
         </div>
 
         <section id="result-area">
-            <div class="mit-card result-card">
-                <div id="result-content">
-                    </div>
-                
+            <div class="result-card">
+                <div id="result-content"></div>
                 <div class="disclaimer">
-                    <i class="fa-solid fa-triangle-exclamation"></i>
-                    <strong>Lưu ý quan trọng:</strong> Kết quả này chỉ mang tính chất tham khảo dựa trên dữ liệu học thuật. Nếu triệu chứng kéo dài, hãy đến ngay phòng y tế trường hoặc cơ sở y tế gần nhất.
+                    <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.2rem;"></i>
+                    <span><strong>Lưu ý quan trọng:</strong> Kết quả này chỉ mang tính chất tham khảo dựa trên dữ liệu học thuật. Nếu triệu chứng kéo dài, hãy đến ngay phòng y tế trường hoặc cơ sở y tế gần nhất.</span>
                 </div>
             </div>
         </section>
     </main>
 
     <footer>
-        &copy; 2026 HealthScan Pro - Nguyễn Minh Đức | MIT Academic Style
+        &copy; 2026 HealthScan Pro - Nguyễn Minh Đức | Dự án Khoa học kỹ thuật LTV
     </footer>
 
     <script>
-        // Cơ sở dữ liệu mẫu (Đức có thể mở rộng thêm)
+        // --- GIỮ NGUYÊN DỮ LIỆU GỐC CỦA ĐỨC ---
         const healthDatabase = [
             {
                 keywords: ["đau đầu", "nhức đầu", "chóng mặt"],
@@ -179,7 +257,6 @@
                 return;
             }
 
-            // Thuật toán tìm kiếm Weighted cơ bản
             let match = healthDatabase.find(item => 
                 item.keywords.some(key => input.includes(key))
             );
@@ -188,25 +265,25 @@
 
             if (match) {
                 resultContent.innerHTML = `
-                    <h2 style="color: var(--mit-red);"><i class="fa-solid fa-clipboard-check"></i> Kết quả phân tích</h2>
-                    <h3 style="margin: 15px 0;">${match.title}</h3>
-                    <p style="line-height: 1.6; color: #444;">${match.advice}</p>
-                    <div style="margin-top: 20px; border-top: 1px solid #eee; padding-top: 15px;">
-                        <a href="tips.html" style="color: var(--mit-red); text-decoration: none; font-weight: 600;">Xem thêm mẹo chăm sóc sức khỏe &rarr;</a>
+                    <h2 style="color: var(--primary-blue); display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
+                        <i class="fa-solid fa-clipboard-check"></i> Kết quả phân tích
+                    </h2>
+                    <h3 style="margin-bottom: 15px; font-size: 1.4rem; color: var(--text-main);">${match.title}</h3>
+                    <p style="line-height: 1.8; color: #475569; font-size: 1.1rem;">${match.advice}</p>
+                    <div style="margin-top: 25px; border-top: 1px solid #f1f5f9; padding-top: 20px;">
+                        <a href="tips.html" style="color: var(--primary-blue); text-decoration: none; font-weight: 700;">Xem thêm mẹo chăm sóc sức khỏe &rarr;</a>
                     </div>
                 `;
             } else {
                 resultContent.innerHTML = `
-                    <h2 style="color: var(--mit-dark);"><i class="fa-solid fa-magnifying-glass-question"></i> Chưa xác định rõ</h2>
-                    <p>Hệ thống hiện tại chưa có dữ liệu chính xác cho triệu chứng này. Bạn nên mô tả chi tiết hơn hoặc gặp cán bộ y tế để được tư vấn chính xác.</p>
+                    <h2 style="color: #64748b;"><i class="fa-solid fa-magnifying-glass-question"></i> Chưa xác định rõ</h2>
+                    <p style="margin-top: 10px; color: #475569;">Hệ thống hiện tại chưa có dữ liệu chính xác cho triệu chứng này. Bạn nên mô tả chi tiết hơn hoặc gặp cán bộ y tế để được tư vấn chính xác.</p>
                 `;
             }
 
-            // Tự động cuộn xuống phần kết quả
             resultArea.scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Cho phép nhấn Enter để tìm kiếm
         document.getElementById("symptomInput").addEventListener("keyup", function(event) {
             if (event.key === "Enter") {
                 diagnose();
