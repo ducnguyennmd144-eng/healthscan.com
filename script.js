@@ -1,10 +1,10 @@
 /**
  * HealthScan Pro - Core Logic Engine
- * Phiên bản: 3.0 (ProVip)
+ * Phiên bản: 3.0 (ProVip - Tinh chỉnh an toàn đa trang)
  * Tác giả: Nguyễn Minh Đức
  */
 
-// 1. DATABASE NÂNG CẤP (Đã được tối ưu từ dữ liệu gốc của bạn)
+// 1. DATABASE NÂNG CẤP
 const diseasesDatabase = [
     /* Hô hấp */
     { name: "Cảm cúm", group: "Hô hấp", keywords: ["sốt", "ho", "sổ mũi", "mệt mỏi", "đau người"], risk: "Trung bình", advice: "Nghỉ ngơi, uống nhiều nước ấm và bổ sung vitamin C." },
@@ -29,13 +29,14 @@ const diseasesDatabase = [
     { name: "Đau vai gáy", group: "Cơ xương", keywords: ["đau vai", "mỏi gáy", "cứng cổ", "ngồi lâu"], risk: "Thấp", advice: "Tập các bài vận động cổ nhẹ nhàng và chỉnh lại tư thế ngồi." }
 ];
 
-// 2. CÁC HÀM XỬ LÝ GIAO DIỆN SIÊU CẤP
+// 2. KHỞI TẠO BIẾN GIAO DIỆN
 const chatBox = document.getElementById("chatBox");
 const inputField = document.getElementById("symptomInput");
 const sendBtn = document.getElementById("sendBtn");
 
-// Hàm thêm tin nhắn vào khung chat với hiệu ứng mượt
+// Hàm thêm tin nhắn vào khung chat
 function appendMessage(sender, content, isHTML = false) {
+    if (!chatBox) return; // Bảo vệ chống lỗi trang phụ
     const wrapper = document.createElement("div");
     wrapper.className = `message-wrapper ${sender}-wrapper`;
     
@@ -49,16 +50,12 @@ function appendMessage(sender, content, isHTML = false) {
     `;
     
     chatBox.appendChild(wrapper);
-    
-    // Cuộn xuống dưới cùng
-    chatBox.scrollTo({
-        top: chatBox.scrollHeight,
-        behavior: 'smooth'
-    });
+    chatBox.scrollTo({ top: chatBox.scrollHeight, behavior: 'smooth' });
 }
 
 // Hiệu ứng "AI đang suy nghĩ"
 function showTyping() {
+    if (!chatBox) return;
     const typingDiv = document.createElement("div");
     typingDiv.id = "typing-indicator";
     typingDiv.className = "message-wrapper ai-wrapper";
@@ -78,18 +75,16 @@ function removeTyping() {
     if (indicator) indicator.remove();
 }
 
-// 3. THUẬT TOÁN PHÂN TÍCH TRIỆU CHỨNG (WEIGHTED SEARCH)
+// 3. THUẬT TOÁN PHÂN TÍCH TRIỆU CHỨNG
 function checkSymptoms() {
+    if (!inputField) return;
     const text = inputField.value.trim();
     if (!text) return;
 
-    // Hiển thị tin nhắn người dùng
     appendMessage("user", escapeHTML(text));
     inputField.value = "";
-
     showTyping();
 
-    // Giả lập thời gian suy nghĩ của AI (800ms)
     setTimeout(() => {
         removeTyping();
         const textLower = text.toLowerCase();
@@ -99,18 +94,13 @@ function checkSymptoms() {
             let score = 0;
             disease.keywords.forEach(keyword => {
                 if (textLower.includes(keyword)) {
-                    score += 10; // Trọng số cơ bản
-                    // Cộng thêm điểm nếu từ khóa dài (độ chính xác cao hơn)
+                    score += 10;
                     if (keyword.length > 5) score += 5;
                 }
             });
-
-            if (score > 0) {
-                results.push({ ...disease, score });
-            }
+            if (score > 0) results.push({ ...disease, score });
         });
 
-        // Sắp xếp theo điểm số cao nhất
         results.sort((a, b) => b.score - a.score);
 
         if (results.length === 0) {
@@ -121,7 +111,7 @@ function checkSymptoms() {
     }, 800);
 }
 
-// 4. RENDER KẾT QUẢ DƯỚI DẠNG CARD CHUYÊN NGHIỆP
+// 4. RENDER KẾT QUẢ
 function renderDiseaseCards(results) {
     let headerMsg = "Dựa trên các triệu chứng bạn cung cấp, đây là phân tích từ hệ thống:";
     appendMessage("ai", headerMsg);
@@ -143,12 +133,9 @@ function renderDiseaseCards(results) {
                 </div>
             </div>
         `;
-        setTimeout(() => {
-            appendMessage("ai", cardHTML, true);
-        }, index * 300); // Hiển thị từng card một cách mượt mà
+        setTimeout(() => appendMessage("ai", cardHTML, true), index * 300);
     });
 
-    // Thêm cảnh báo y tế cuối cùng
     setTimeout(() => {
         const disclaimer = `
             <div style="font-size:0.8rem; color:#94a3b8; font-style:italic; margin-top:10px">
@@ -159,14 +146,16 @@ function renderDiseaseCards(results) {
     }, 700);
 }
 
-// 5. CÁC TIỆN ÍCH BỔ SUNG
+// 5. TIỆN ÍCH BỔ SUNG
 function quickSearch(symptom) {
-    inputField.value = symptom;
-    checkSymptoms();
+    if (inputField) {
+        inputField.value = symptom;
+        checkSymptoms();
+    }
 }
 
 function clearChat() {
-    if (confirm("Bạn có chắc chắn muốn làm mới cuộc trò chuyện?")) {
+    if (chatBox && confirm("Bạn có chắc chắn muốn làm mới cuộc trò chuyện?")) {
         chatBox.innerHTML = `
             <div class="message-wrapper ai-wrapper">
                 <div class="message ai-message">Chào Đức! Hệ thống đã được làm mới. Mình có thể giúp gì cho sức khỏe của bạn lúc này?</div>
@@ -181,21 +170,31 @@ function escapeHTML(str) {
     return p.innerHTML;
 }
 
-// Khởi tạo các sự kiện khi trang web sẵn sàng
+// 6. KHỞI TẠO SỰ KIỆN KHI TRANG SẴN SÀNG
 document.addEventListener("DOMContentLoaded", () => {
-    inputField.focus();
-    
-    // Thêm CSS cho phần Typing Indicator (vì nó sinh ra động)
+    // Thêm CSS động cho hiệu ứng Typing (Đã đổi màu Blue cho chuẩn VIP)
     const style = document.createElement('style');
     style.innerHTML = `
         .typing-dots { display: flex; gap: 4px; padding: 5px 0; }
-        .dot { width: 8px; height: 8px; background: #cbd5e1; border-radius: 50%; animation: typing 1s infinite; }
+        .dot { width: 8px; height: 8px; background: #3b82f6; border-radius: 50%; animation: typing 1s infinite; }
         .dot:nth-child(2) { animation-delay: 0.2s; }
         .dot:nth-child(3) { animation-delay: 0.4s; }
         @keyframes typing { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
     `;
     document.head.appendChild(style);
 
-    // Gán sự kiện cho nút gửi
-    sendBtn.addEventListener("click", checkSymptoms);
+    // CHỈ GÁN SỰ KIỆN NẾU ĐANG Ở TRANG CHỦ (Tránh lỗi null trên trang Support/Tips)
+    if (inputField && sendBtn && chatBox) {
+        inputField.focus();
+        
+        // Nhấn nút gửi
+        sendBtn.addEventListener("click", checkSymptoms);
+        
+        // Tinh chỉnh VIP: Bổ sung sự kiện nhấn phím Enter để gửi chat
+        inputField.addEventListener("keyup", (event) => {
+            if (event.key === "Enter") {
+                checkSymptoms();
+            }
+        });
+    }
 });
