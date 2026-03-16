@@ -1,21 +1,16 @@
-/* =========================================================
-   HEALTHSCAN PRO - MODERN AI STYLE 
-   Design Concept: Clean, Medical Blue, High-Tech, VIP
-   Tác giả: Nguyễn Minh Đức
-========================================================= */
+/* HEALTHSCAN PRO - MIT MODERN STYLE 
+    Design Concept: Academic, Precise, High-Tech
+*/
 
 :root {
-    /* Bảng màu chuẩn AI & Medical Tech (Đồng bộ với Navbar) */
-    --primary-blue: #3b82f6;      
-    --primary-dark: #2563eb;      
-    --bg-light: #f8fafc;
+    /* Bảng màu chuẩn MIT & Medical Tech */
+    --mit-red: #A31F34;       /* Màu đỏ đặc trưng MIT */
+    --mit-dark: #231F20;      /* Màu đen xám sâu */
+    --mit-light-gray: #F2F2F2;
+    --medical-blue: #0077B6;
+    --text-primary: #1a1a1a;
+    --text-muted: #555555;
     --white: #ffffff;
-    --text-main: #1e293b;
-    --text-muted: #64748b;
-    --border-color: #e2e8f0;
-    --danger-red: #ef4444;
-    --warning-yellow: #f59e0b;
-    --success-green: #10b981;
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -23,106 +18,92 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Inter', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 body {
-    background-color: var(--bg-light);
-    color: var(--text-main);
+    background-color: var(--white);
+    color: var(--text-primary);
     height: 100vh;
     display: flex;
     flex-direction: column;
     overflow: hidden;
 }
 
-/* --- TOP ANNOUNCEMENT --- */
+/* --- TOP ANNOUNCEMENT (Hệ MIT thường có thanh thông báo nhỏ) --- */
 .top-announcement {
-    background: var(--primary-dark);
+    background: var(--mit-dark);
     color: var(--white);
     padding: 8px 5%;
     font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 1px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
     text-transform: uppercase;
-    text-align: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-/* --- NAVBAR (Đã đồng bộ Xanh Blue VIP) --- */
+/* --- NAVBAR (Lấy cảm hứng từ Header MIT) --- */
 .navbar {
-    background: var(--white);
-    height: 75px;
+    background: var(--mit-red);
+    color: var(--white);
+    padding: 0 5%;
+    height: 70px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 5%;
-    box-shadow: 0 2px 15px rgba(0,0,0,0.05);
-    border-bottom: 1px solid var(--border-color);
-    position: sticky;
-    top: 0;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     z-index: 1000;
 }
 
-.nav-container {
-    width: 100%;
-    max-width: 1400px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
 .logo {
-    font-size: 1.5rem;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-weight: 800;
-    text-decoration: none;
-    color: var(--primary-blue);
+    font-size: 1.6rem;
+    letter-spacing: -1px;
+    text-transform: uppercase;
     display: flex;
     align-items: center;
     gap: 12px;
-    font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
-.logo span { color: var(--text-main); }
-.logo b { color: var(--text-main); font-weight: 800; }
+.logo i {
+    font-size: 1.8rem;
+}
 
 .nav-links {
     display: flex;
     gap: 30px;
+    height: 100%;
 }
 
-.nav-item {
+.nav-links a {
     text-decoration: none;
-    color: var(--text-muted);
-    font-size: 0.95rem;
+    color: rgba(255,255,255,0.8);
     font-weight: 600;
+    font-size: 14px;
     display: flex;
     align-items: center;
-    gap: 8px;
+    border-bottom: 3px solid transparent;
     transition: var(--transition);
 }
 
-.nav-item:hover, .nav-item.active {
-    color: var(--primary-blue);
+.nav-links a:hover, .nav-links a.active {
+    color: var(--white);
+    border-bottom-color: var(--white);
 }
 
 /* --- APP LAYOUT --- */
 .app-container {
     flex: 1;
     display: grid;
-    grid-template-columns: 320px 1fr;
-    height: calc(100vh - 100px); /* Điều chỉnh chiều cao cho vừa */
-    max-width: 1400px;
-    margin: 0 auto;
-    width: 100%;
-    background: var(--bg-light);
+    grid-template-columns: 350px 1fr;
+    height: calc(100vh - 100px);
 }
 
-/* --- SIDEBAR (Khu vực gợi ý bệnh) --- */
+/* --- SIDEBAR (Kỹ thuật & Thông tin) --- */
 .sidebar {
-    background: var(--white);
-    padding: 30px;
-    border-right: 1px solid var(--border-color);
+    background: var(--mit-light-gray);
+    padding: 40px;
+    border-right: 1px solid #ddd;
     display: flex;
     flex-direction: column;
     gap: 30px;
@@ -130,192 +111,152 @@ body {
 }
 
 .user-profile h2 {
-    font-size: 1.4rem;
+    font-size: 24px;
     font-weight: 800;
-    margin-top: 5px;
-    color: var(--text-main);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.user-profile h2 i {
-    color: var(--primary-blue);
+    margin-top: 10px;
+    border-bottom: 4px solid var(--mit-red);
+    display: inline-block;
 }
 
 .quick-actions h3 {
-    font-size: 12px;
+    font-size: 13px;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: var(--text-muted);
-    margin-bottom: 15px;
-    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--mit-red);
+    margin-bottom: 20px;
+    font-weight: 800;
 }
 
 .tag-btn {
     background: var(--white);
-    border: 1px solid var(--border-color);
-    color: var(--text-main);
-    padding: 12px 18px;
+    border: 1px solid #ddd;
+    color: var(--mit-dark);
+    padding: 12px 15px;
     margin-bottom: 10px;
-    border-radius: 12px; /* Bo góc hiện đại */
+    border-radius: 0; /* MIT thích sự vuông vức, chuyên nghiệp */
     font-size: 14px;
     font-weight: 600;
     width: 100%;
     text-align: left;
     cursor: pointer;
     transition: var(--transition);
-    display: flex;
-    align-items: center;
-    gap: 10px;
 }
 
 .tag-btn:hover {
-    background: #eff6ff;
-    color: var(--primary-blue);
-    border-color: #bfdbfe;
-    transform: translateX(5px);
+    background: var(--mit-red);
+    color: var(--white);
+    border-color: var(--mit-red);
+    transform: translateX(10px);
 }
 
-/* --- CHAT AREA (Sạch sẽ, Chuyên nghiệp) --- */
+/* --- CHAT AREA (Sạch sẽ, Tập trung) --- */
 .chat-main {
     display: flex;
     flex-direction: column;
     background: var(--white);
-    position: relative;
 }
 
 .chat-header {
-    padding: 15px 30px;
-    border-bottom: 1px solid var(--border-color);
+    padding: 20px 40px;
+    border-bottom: 1px solid #eee;
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    background: var(--white);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.02);
-    z-index: 10;
 }
 
 .chat-box {
     flex: 1;
-    padding: 30px 5%;
+    padding: 40px;
     overflow-y: auto;
-    background: #f8fafc;
+    background: #ffffff;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 25px;
 }
 
-/* Bong bóng chat chuẩn ứng dụng AI hiện đại */
-.message-wrapper {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 10px;
-    max-width: 80%;
-    animation: slideIn 0.3s ease-out forwards;
-}
-
-@keyframes slideIn {
-    from { opacity: 0; transform: translateY(15px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.user-wrapper { align-self: flex-end; align-items: flex-end; }
-.ai-wrapper { align-self: flex-start; align-items: flex-start; }
-
+/* Bong bóng chat phong cách tối giản MIT */
 .message {
-    padding: 15px 20px;
+    max-width: 75%;
+    padding: 18px 24px;
     font-size: 15px;
-    line-height: 1.6;
-    border-radius: 18px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+    line-height: 1.7;
 }
 
 .ai-message {
-    background: var(--white);
-    color: var(--text-main);
-    border: 1px solid var(--border-color);
-    border-bottom-left-radius: 4px; /* Cái đuôi bong bóng chat */
+    background: var(--mit-light-gray);
+    color: var(--mit-dark);
+    border-left: 6px solid var(--mit-red);
 }
 
 .user-message {
-    background: var(--primary-blue);
+    background: var(--mit-dark);
     color: var(--white);
-    border-bottom-right-radius: 4px;
+    align-self: flex-end;
 }
 
 .msg-time {
     font-size: 11px;
-    font-weight: 500;
-    margin-top: 6px;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-top: 8px;
     color: var(--text-muted);
 }
 
-/* --- INPUT KHU VỰC CHAT --- */
+/* --- INPUT CHUYÊN NGHIỆP --- */
 .input-container {
-    padding: 20px 5%;
-    background: var(--white);
-    border-top: 1px solid var(--border-color);
+    padding: 30px 40px;
+    border-top: 2px solid var(--mit-light-gray);
 }
 
 .input-wrapper {
     display: flex;
-    background: var(--bg-light);
-    border: 1px solid var(--border-color);
-    border-radius: 30px;
-    padding: 8px 8px 8px 25px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.03);
-    transition: var(--transition);
-}
-
-.input-wrapper:focus-within {
-    background: var(--white);
-    border-color: var(--primary-blue);
-    box-shadow: 0 8px 30px rgba(59, 130, 246, 0.1);
+    border: 2px solid var(--mit-dark);
+    padding: 5px;
 }
 
 .input-wrapper input {
     flex: 1;
     border: none;
-    background: transparent;
+    padding: 15px;
     font-size: 16px;
     outline: none;
-    color: var(--text-main);
 }
 
 .send-btn {
-    background: var(--primary-blue);
+    background: var(--mit-dark);
     color: var(--white);
     border: none;
-    width: 45px;
-    height: 45px;
-    border-radius: 50%; /* Nút tròn hiện đại */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    padding: 0 30px;
     cursor: pointer;
-    font-size: 1.1rem;
+    font-weight: 700;
+    text-transform: uppercase;
     transition: var(--transition);
 }
 
 .send-btn:hover {
-    background: var(--primary-dark);
-    transform: scale(1.05);
+    background: var(--mit-red);
 }
 
-/* --- DISEASE CARD (Phiên bản đã render trong Script.js) --- */
+/* --- DISEASE CARD (MIT Research Style) --- */
 .disease-card {
     background: var(--white);
-    border: 1px solid var(--border-color);
-    padding: 20px;
-    margin-top: 10px;
-    border-radius: 16px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+    border: 1px solid #ddd;
+    padding: 25px;
+    margin-top: 20px;
 }
+
+.disease-card strong {
+    font-size: 1.4rem;
+    color: var(--mit-red);
+    display: block;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+/* Hiệu ứng Typing */
+.dot { background: var(--mit-red) !important; }
 
 /* Responsive */
 @media (max-width: 1024px) {
     .app-container { grid-template-columns: 1fr; }
-    .sidebar { display: none; } /* Giấu sidebar trên Mobile */
-    .message-wrapper { max-width: 90%; }
+    .sidebar { display: none; }
 }
