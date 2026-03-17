@@ -238,7 +238,7 @@ function checkSymptoms() {
         results.sort((a, b) => b.score - a.score);
 
         if (results.length === 0) {
-            appendMessage("ai", `Chào Đức, mình chưa xác định rõ triệu chứng này. Bạn mô tả kỹ hơn (ví dụ: đau ở đâu, có sốt không...) để mình hỗ trợ tốt hơn nhé!`);
+            appendMessage("ai", `Chào Bạn, mình chưa xác định rõ triệu chứng này. Bạn mô tả kỹ hơn (ví dụ: đau ở đâu, có sốt không...) để mình hỗ trợ tốt hơn nhé!`);
         } else {
             renderDiseaseCards(results, textLower);
         }
@@ -281,7 +281,7 @@ function renderDiseaseCards(results, userInput) {
     setTimeout(() => {
         appendMessage("ai", `
             <div style="font-size:0.75rem; color:#94a3b8; font-style:italic; border-top: 1px solid #f1f5f9; pt: 8px">
-                * Lưu ý: Kết quả này chỉ mang tính tham khảo. Nếu thấy mệt nhiều, Đức hãy báo ngay cho thầy cô hoặc y tế trường nhé!
+                * Lưu ý: Kết quả này chỉ mang tính tham khảo. Nếu thấy mệt nhiều, Bạn hãy báo ngay cho thầy cô hoặc y tế trường nhé!
             </div>
         `, true);
     }, 700);
@@ -297,7 +297,7 @@ document.addEventListener("DOMContentLoaded", () => {
         updateTime();
     }
 
-    // CSS cho Typing dots (giữ nguyên của Đức vì đã đẹp)
+    // CSS cho Typing dots 
     const style = document.createElement('style');
     style.innerHTML = `
         .typing-dots { display: flex; gap: 4px; padding: 5px 0; }
@@ -320,8 +320,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Các hàm phụ trợ tiện ích (Clear chat, Search nhanh)
 window.clearChat = () => {
-    if (confirm("Làm mới cuộc trò chuyện nhé Đức?")) {
-        chatBox.innerHTML = `<div class="message-wrapper ai-wrapper"><div class="message ai-message">Hệ thống đã sẵn sàng! Đức đang cảm thấy thế nào?</div></div>`;
+    if (confirm("Làm mới cuộc trò chuyện nhé Bạn?")) {
+        chatBox.innerHTML = `<div class="message-wrapper ai-wrapper"><div class="message ai-message">Hệ thống đã sẵn sàng! Bạn đang cảm thấy thế nào?</div></div>`;
     }
 };
 
